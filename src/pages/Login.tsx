@@ -2,6 +2,7 @@ import { Box, Checkbox, Grid, Link, Typography } from '@mui/material';
 import React from 'react';
 import { DefaultButton } from '../components/Buttons/DefaultButton';
 import { EmailInput, PasswordInput } from '../components/Inputs/Inputs';
+import bg from '../../images/bg.png';
 
 const Login: React.FC = () => {
   return (

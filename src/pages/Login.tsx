@@ -12,7 +12,8 @@ const Login: React.FC = () => {
         padding: '3rem',
         display: 'flex',
         justifyContent: 'center',
-        alignItens: 'center'
+        alignItens: 'center',
+        backgroundImage: 'url(../../images/)'
       }}
     >
       <Grid item xs={6}>

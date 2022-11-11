@@ -7,6 +7,7 @@ const Login: React.FC = () => {
   return (
     <Grid
       columns={12}
+      container
       direction={'row'}
       sx={{
         padding: '3rem',

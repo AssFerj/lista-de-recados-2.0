@@ -1,4 +1,4 @@
-import { Box, Checkbox, Grid, Link, Typography } from '@mui/material';
+import { Box, Checkbox, Grid, Link, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { DefaultButton } from '../components/Buttons/DefaultButton';
 import { EmailInput, FirstNameInput, LastNameInput, PasswordInput } from '../components/Inputs/Inputs';
@@ -13,7 +13,8 @@ const Login: React.FC = () => {
         padding: '3rem',
         display: 'flex',
         justifyContent: 'center',
-        alignItens: 'center'
+        alignItens: 'center',
+        background: '#000000'
       }}
     >
       <Grid
@@ -21,10 +22,11 @@ const Login: React.FC = () => {
         xs={6}
         sx={{
           padding: '2rem',
-          width: '50%'
+          width: '50%',
+          background: '#d2c2c2'
         }}
       ></Grid>
-      <Grid item xs={6}>
+      <Grid item xs={6} component="form" sx={{ background: '#c2c2c2' }}>
         <Box
           sx={{
             padding: '2rem',
@@ -42,11 +44,15 @@ const Login: React.FC = () => {
           >
             Crie sua conta
           </Typography>
-          <FirstNameInput id="login-first-name-input" label="Nome" />
-          <LastNameInput id="login-last-name-input" label="Sobrenome" />
+          <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+            <FirstNameInput id="login-first-name-input" label="Nome" />
+            <LastNameInput id="login-last-name-input" label="Sobrenome" />
+          </Stack>
           <EmailInput id="login-email-input" label="E-mail" />
-          <PasswordInput id="login-password-input" label="Senha" />
-          <PasswordInput id="login-conf-password-input" label="Confirmar Senha" />
+          <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+            <PasswordInput id="login-password-input" label="Senha" />
+            <PasswordInput id="login-conf-password-input" label="Confirmar Senha" />
+          </Stack>
           <DefaultButton text="Cadastrar" />
           <Box
             sx={{

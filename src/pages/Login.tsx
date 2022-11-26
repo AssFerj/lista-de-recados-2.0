@@ -16,7 +16,7 @@ const Login: React.FC = () => {
         alignItens: 'center'
       }}
     >
-      <Grid item xs={6}>
+      <Grid item xs={6} component="form">
         <Box
           sx={{
             padding: '2rem',

@@ -14,7 +14,8 @@ const Login: React.FC = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItens: 'center',
-        background: '#000000'
+        background: '#000000',
+        height: '100vh'
       }}
     >
       <Grid
@@ -48,7 +49,9 @@ const Login: React.FC = () => {
             <FirstNameInput id="login-first-name-input" label="Nome" />
             <LastNameInput id="login-last-name-input" label="Sobrenome" />
           </Stack>
-          <EmailInput id="login-email-input" label="E-mail" />
+          <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+            <EmailInput id="login-email-input" label="E-mail" />
+          </Stack>
           <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
             <PasswordInput id="login-password-input" label="Senha" />
             <PasswordInput id="login-conf-password-input" label="Confirmar Senha" />

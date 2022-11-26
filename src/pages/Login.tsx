@@ -13,7 +13,8 @@ const Login: React.FC = () => {
         padding: '3rem',
         display: 'flex',
         justifyContent: 'center',
-        alignItens: 'center'
+        alignItens: 'center',
+        height: '100vh'
       }}
     >
       <Grid item xs={6} component="form">

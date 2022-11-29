@@ -3,6 +3,7 @@ import React from 'react';
 import { DefaultButton } from '../components/Buttons/DefaultButton';
 import { EmailInput, PasswordInput } from '../components/Inputs/Inputs';
 import { useNavigate } from 'react-router';
+import bg from '../images/bg.png';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -13,6 +14,10 @@ const Login: React.FC = () => {
       container
       direction={'row'}
       sx={{
+        backgroundImage: `url(${bg})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
         padding: '3rem',
         display: 'flex',
         justifyContent: 'center',
@@ -20,14 +25,25 @@ const Login: React.FC = () => {
         height: '100vh'
       }}
     >
-      <Grid item xs={6} component="form">
+      <Grid item 
+          xl={3} 
+          sm={8}  
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItens: 'center'
+          }}
+          component='form'>
         <Box
+          borderRadius={'10px'}
           sx={{
             padding: '2rem',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            alignItens: 'center'
+            alignItens: 'center',
+            backgroundColor: '#ffffff'
           }}
         >
           <Typography
@@ -73,14 +89,6 @@ const Login: React.FC = () => {
           </Box>
         </Box>
       </Grid>
-      <Grid
-        item
-        xs={6}
-        sx={{
-          padding: '2rem',
-          width: '50%'
-        }}
-      ></Grid>
     </Grid>
   );
 };

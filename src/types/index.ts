@@ -1,4 +1,4 @@
 import UserTypes from './UserTypes';
-import TaskType from './TaskTypes';
+import TaskTypes from './TaskTypes';
 
-export type { UserTypes, TaskType };
+export type { UserTypes, TaskTypes };

@@ -2,8 +2,11 @@ import { Box, Checkbox, Grid, Link, Typography } from '@mui/material';
 import React from 'react';
 import { DefaultButton } from '../components/Buttons/DefaultButton';
 import { EmailInput, PasswordInput } from '../components/Inputs/Inputs';
+import { useNavigate } from 'react-router';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
+  const cadastro = navigate('/cadastro');
   return (
     <Grid
       columns={12}
@@ -13,10 +16,11 @@ const Login: React.FC = () => {
         padding: '3rem',
         display: 'flex',
         justifyContent: 'center',
-        alignItens: 'center'
+        alignItens: 'center',
+        height: '100vh'
       }}
     >
-      <Grid item xs={6}>
+      <Grid item xs={6} component="form">
         <Box
           sx={{
             padding: '2rem',
@@ -57,7 +61,7 @@ const Login: React.FC = () => {
           >
             <Typography variant="body1">Não tem conta?</Typography>
             <Link
-              href="/cadastrar"
+              href="cadastro"
               underline="none"
               variant="body1"
               sx={{

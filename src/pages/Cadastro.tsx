@@ -68,3 +68,4 @@ const Cadastro: React.FC = () => {
 };
 
 export default Cadastro;
+

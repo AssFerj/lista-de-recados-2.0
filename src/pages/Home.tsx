@@ -1,6 +1,8 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Stack, Grid, Typography, Divider } from '@mui/material';
 import ResponsiveAppBar from '../components/ResponsiveAppBar/ResponsiveAppBar';
+import { TaskTitleInput, TaskDescInput } from '../components/Inputs/Inputs';
+import { DefaultButton } from '../components/Buttons/DefaultButton';
 
 
 const Home: React.FC = () => {
@@ -19,34 +21,22 @@ const Home: React.FC = () => {
           height: 'auto'
         }}
       >
-        <Grid item xs={12} component="form">
-          <Box
-            sx={{
-              padding: '2rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItens: 'center'
-            }}
-          >
-            <Typography
-              variant="h3"
-              sx={{
-                textAlign: 'center'
-              }}
-            >
-              Lista de Recados
-            </Typography>
-          </Box>
+        <Grid item xs={12}>
+          <Stack 
+            component="form"
+            direction="row" 
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}>
+            <TaskTitleInput id={'taskTitleInput'} label={'Título'}/>
+            <TaskDescInput id={'taskDescInput'} label={'Descrição'}/>
+            <DefaultButton text={'Cadastrar'} />
+          </Stack>
         </Grid>
-        <Grid
-          item
-          xs={6}
-          sx={{
-            padding: '2rem',
-            width: '50%'
-          }}
-        ></Grid>
+        <Divider />
+        <Grid item xs={12}>
+
+        </Grid>
       </Grid>
     </>
   );

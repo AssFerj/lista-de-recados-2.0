@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Grid, Typography, Divider } from '@mui/material';
+import { Stack, Grid, Divider } from '@mui/material';
 import ResponsiveAppBar from '../components/ResponsiveAppBar/ResponsiveAppBar';
 import { TaskTitleInput, TaskDescInput } from '../components/Inputs/Inputs';
 import { DefaultButton } from '../components/Buttons/DefaultButton';

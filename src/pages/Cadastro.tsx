@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Link, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, Grid, Link, Stack, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import bg from '../images/bg.png';
@@ -34,6 +34,11 @@ const Cadastro: React.FC = () => {
         height: '100vh'
       }}
     >
+      <Grid item position={'absolute'}>
+        <Alert variant="filled" severity="success">
+        This is a success alert — check it out!
+        </Alert>
+      </Grid>
       <Grid
         item
         xl={3}
@@ -63,12 +68,13 @@ const Cadastro: React.FC = () => {
           <Typography variant="h3" sx={{ textAlign: 'center' }}>
             Crie sua conta
           </Typography>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={2} alignItems="center" width={'100%'}>
             <TextField
               id="login-first-name-input"
               label="Nome"
               type="text"
               required
+              fullWidth
               variant="outlined"
               sx={{
                 margin: '1rem 0'
@@ -81,6 +87,7 @@ const Cadastro: React.FC = () => {
               label="Sobrenome"
               type="text"
               required
+              fullWidth
               variant="outlined"
               sx={{
                 margin: '1rem 0'
@@ -95,6 +102,7 @@ const Cadastro: React.FC = () => {
               label="E-mail"
               type="email"
               required
+              fullWidth
               variant="outlined"
               sx={{
                 margin: '1rem 0'
@@ -109,6 +117,7 @@ const Cadastro: React.FC = () => {
               label="Senha"
               type="password"
               required
+              fullWidth
               variant="outlined"
               sx={{
                 margin: '1rem 0'
@@ -121,6 +130,7 @@ const Cadastro: React.FC = () => {
               label="Confirmar Senha"
               type="password"
               required
+              fullWidth
               variant="outlined"
               sx={{
                 margin: '1rem 0'
@@ -130,16 +140,16 @@ const Cadastro: React.FC = () => {
             />
           </Stack>
           <Stack>
-          <Button
-            variant="contained"
-            size="large"
-            sx={{
-              margin: '1rem 0',
-              padding: '.8rem'
-            }}
-          >
-            Cadastrar
-          </Button>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                margin: '1rem 0',
+                padding: '.8rem'
+              }}
+            >
+              Cadastrar
+            </Button>
           </Stack>
           <Box
             sx={{

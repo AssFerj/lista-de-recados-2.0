@@ -7,15 +7,15 @@ import Login from '../pages/Login';
 const router = createBrowserRouter([
   {
     path: '/',
+    element: <Home />
+  },
+  {
+    path: '/login',
     element: <Login />
   },
   {
     path: '/cadastro',
     element: <Cadastro />
-  },
-  {
-    path: '/home',
-    element: <Home />
   }
 ]);
 

@@ -6,7 +6,13 @@ interface ButtonProps {
 }
 
 const DefaultButton: React.FC<ButtonProps> = ({ text }) => {
-  return <Button variant="contained">{text}</Button>;
+  return (
+    <Button variant="contained" size="large" sx={{
+      margin: '1rem 0'
+    }}>
+      {text}
+    </Button>
+  );
 };
 
 export { DefaultButton };

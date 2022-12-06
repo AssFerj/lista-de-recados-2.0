@@ -1,6 +1,6 @@
-interface taskType {
-    id: string;
-    description: string;
-    detail: string;
+interface TaskType {
+  id: number;
+  description: string;
+  detail: string;
 }
-export default taskType;
+export default TaskType;

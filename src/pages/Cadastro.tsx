@@ -1,12 +1,8 @@
-import { Alert, Box, Button, Grid, Link, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
 import bg from '../images/bg.png';
 
 const Cadastro: React.FC = () => {
-  const navigate = useNavigate();
-  // eslint-disable-next-line no-unused-vars
-  const login = navigate('/login');
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -35,8 +31,14 @@ const Cadastro: React.FC = () => {
       }}
     >
       <Grid item position={'absolute'}>
-        <Alert variant="filled" severity="success">
-        This is a success alert — check it out!
+        <Alert
+          sx={{
+            color: '#ffffff'
+          }}
+          variant="filled"
+          severity="success"
+        >
+          This is a success alert — check it out!
         </Alert>
       </Grid>
       <Grid
@@ -70,7 +72,7 @@ const Cadastro: React.FC = () => {
           </Typography>
           <Stack direction="row" spacing={2} alignItems="center" width={'100%'}>
             <TextField
-              id="login-first-name-input"
+              id="register-first-name-input"
               label="Nome"
               type="text"
               required
@@ -83,7 +85,7 @@ const Cadastro: React.FC = () => {
               value={firstName || ''}
             />
             <TextField
-              id="login-email-input"
+              id="register-last-name-input"
               label="Sobrenome"
               type="text"
               required
@@ -98,7 +100,7 @@ const Cadastro: React.FC = () => {
           </Stack>
           <Stack>
             <TextField
-              id="login-email-input"
+              id="register-email-input"
               label="E-mail"
               type="email"
               required
@@ -113,7 +115,7 @@ const Cadastro: React.FC = () => {
           </Stack>
           <Stack direction="row" spacing={2} alignItems="center">
             <TextField
-              id="login-password-input"
+              id="register-password-input"
               label="Senha"
               type="password"
               required
@@ -126,7 +128,7 @@ const Cadastro: React.FC = () => {
               value={password || ''}
             />
             <TextField
-              id="login-conf-password-input"
+              id="register-conf-password-input"
               label="Confirmar Senha"
               type="password"
               required
@@ -157,9 +159,9 @@ const Cadastro: React.FC = () => {
               alignItens: 'center'
             }}
           >
-            <Link href="login" underline="none" variant="body1">
+            <Button href="login" variant="text">
               Voltar para o login
-            </Link>
+            </Button>
           </Box>
         </Box>
       </Grid>

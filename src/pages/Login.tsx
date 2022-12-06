@@ -1,13 +1,8 @@
-import { Box, Button, Checkbox, Grid, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
 import bg from '../images/bg.png';
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
-  // eslint-disable-next-line no-unused-vars
-  const cadastro = navigate('/cadastro');
-
   const [loginEmail, setLoginEmail] = useState<string>('');
   const [loginPassword, setLoginPassword] = useState<string>('');
 
@@ -28,16 +23,18 @@ const Login: React.FC = () => {
         height: '100vh'
       }}
     >
-      <Grid item 
-          xl={3} 
-          sm={8}  
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItens: 'center'
-          }}
-          component='form'>
+      <Grid
+        item
+        xl={3}
+        sm={8}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItens: 'center'
+        }}
+        component="form"
+      >
         <Box
           borderRadius={'10px'}
           sx={{
@@ -58,28 +55,28 @@ const Login: React.FC = () => {
             Acesse sua conta
           </Typography>
           <TextField
-              id="login-email-input"
-              label="Nome"
-              type="text"
-              required
-              variant="outlined"
-              sx={{
-                margin: '1rem 0'
-              }}
-              onChange={ev => setLoginEmail(ev.target.value)}
-              value={loginEmail || ''}
-            />
+            id="login-email-input"
+            label="E-mail"
+            type="email"
+            required
+            variant="outlined"
+            sx={{
+              margin: '1rem 0'
+            }}
+            onChange={ev => setLoginEmail(ev.target.value)}
+            value={loginEmail || ''}
+          />
           <TextField
-              id="login-password-input"
-              label="Nome"
-              type="text"
-              required
-              variant="outlined"
-              sx={{
-                margin: '1rem 0'
-              }}
-              onChange={ev => setLoginPassword(ev.target.value)}
-              value={loginPassword || ''}
+            id="login-password-input"
+            label="Senha"
+            type="password"
+            required
+            variant="outlined"
+            sx={{
+              margin: '1rem 0'
+            }}
+            onChange={ev => setLoginPassword(ev.target.value)}
+            value={loginPassword || ''}
           />
           <Box
             sx={{
@@ -109,17 +106,9 @@ const Login: React.FC = () => {
               alignItens: 'center'
             }}
           >
-            <Typography variant="body1">Não tem conta?</Typography>
-            <Link
-              href="cadastro"
-              underline="none"
-              variant="body1"
-              sx={{
-                marginLeft: '.5rem'
-              }}
-            >
-              Cadastrar
-            </Link>
+            <Button href="cadastro" variant="text">
+              Não tem conta?
+            </Button>
           </Box>
         </Box>
       </Grid>

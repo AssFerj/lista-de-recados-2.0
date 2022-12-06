@@ -13,7 +13,7 @@ import TaskIcon from '@mui/icons-material/Task';
 
 const settings = ['Perfil', 'Sair'];
 
-const ResponsiveAppBar: React.FC =()=> {
+const ResponsiveAppBar: React.FC = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -42,7 +42,7 @@ const ResponsiveAppBar: React.FC =()=> {
                 fontWeight: 700,
                 letterSpacing: '.3rem',
                 color: 'inherit',
-                textDecoration: 'none',
+                textDecoration: 'none'
               }}
             >
               TaskList
@@ -52,10 +52,12 @@ const ResponsiveAppBar: React.FC =()=> {
             <Tooltip title="Abrir opções">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {/* <Avatar alt="Usuário" src="/static/images/avatar/2.jpg" /> */}
-                <AccountCircleIcon sx={{ 
-                  mr: 1,
-                  color: '#ffffff'
-                }} />
+                <AccountCircleIcon
+                  sx={{
+                    mr: 1,
+                    color: '#ffffff'
+                  }}
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -64,17 +66,17 @@ const ResponsiveAppBar: React.FC =()=> {
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: 'top',
-                horizontal: 'right',
+                horizontal: 'right'
               }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'right',
+                horizontal: 'right'
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {settings.map(setting => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
@@ -85,5 +87,5 @@ const ResponsiveAppBar: React.FC =()=> {
       </Container>
     </AppBar>
   );
-}
+};
 export default ResponsiveAppBar;

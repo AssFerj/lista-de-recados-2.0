@@ -11,7 +11,7 @@ const FirstNameInput: React.FC<InputProps> = ({ id, label }) => {
     <TextField
       id={id}
       label={label}
-      type='text'
+      type="text"
       required
       variant="outlined"
       sx={{
@@ -25,7 +25,7 @@ const LastNameInput: React.FC<InputProps> = ({ id, label }) => {
     <TextField
       id={id}
       label={label}
-      type='text'
+      type="text"
       required
       variant="outlined"
       sx={{
@@ -39,7 +39,7 @@ const EmailInput: React.FC<InputProps> = ({ id, label }) => {
     <TextField
       id={id}
       label={label}
-      type='email'
+      type="email"
       required
       variant="outlined"
       sx={{
@@ -53,7 +53,7 @@ const PasswordInput: React.FC<InputProps> = ({ id, label }) => {
     <TextField
       id={id}
       label={label}
-      type='password'
+      type="password"
       required
       variant="outlined"
       sx={{
@@ -67,7 +67,7 @@ const TaskTitleInput: React.FC<InputProps> = ({ id, label }) => {
     <TextField
       id={id}
       label={label}
-      type='text'
+      type="text"
       required
       variant="outlined"
       sx={{
@@ -81,7 +81,7 @@ const TaskDescInput: React.FC<InputProps> = ({ id, label }) => {
     <TextField
       id={id}
       label={label}
-      type='text'
+      type="text"
       required
       variant="outlined"
       sx={{

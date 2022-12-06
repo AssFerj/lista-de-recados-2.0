@@ -1,8 +1,7 @@
 import React from 'react';
-import { Stack, Grid, Divider } from '@mui/material';
+import { Stack, Grid, Divider, Button } from '@mui/material';
 import ResponsiveAppBar from '../components/ResponsiveAppBar/ResponsiveAppBar';
 import { TaskTitleInput, TaskDescInput } from '../components/Inputs/Inputs';
-import { DefaultButton } from '../components/Buttons/DefaultButton';
 
 
 const Home: React.FC = () => {
@@ -30,7 +29,16 @@ const Home: React.FC = () => {
             spacing={2}>
             <TaskTitleInput id={'taskTitleInput'} label={'Título'}/>
             <TaskDescInput id={'taskDescInput'} label={'Descrição'}/>
-            <DefaultButton text={'Cadastrar'} />
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                margin: '1rem 0',
+                padding: '.8rem'
+              }}
+            >
+              Salvar
+            </Button>
           </Stack>
         </Grid>
         <Divider />

@@ -1,13 +1,16 @@
-import { Box, Checkbox, Grid, Link, Typography } from '@mui/material';
-import React from 'react';
-import { DefaultButton } from '../components/Buttons/DefaultButton';
-import { EmailInput, PasswordInput } from '../components/Inputs/Inputs';
+import { Box, Button, Checkbox, Grid, Link, TextField, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import bg from '../images/bg.png';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const cadastro = navigate('/cadastro');
+
+  const [loginEmail, setLoginEmail] = useState<string>('');
+  const [loginPassword, setLoginPassword] = useState<string>('');
+
   return (
     <Grid
       columns={12}
@@ -54,8 +57,30 @@ const Login: React.FC = () => {
           >
             Acesse sua conta
           </Typography>
-          <EmailInput id="login-email-input" label="E-mail" />
-          <PasswordInput id="login-password-input" label="Senha" />
+          <TextField
+              id="login-email-input"
+              label="Nome"
+              type="text"
+              required
+              variant="outlined"
+              sx={{
+                margin: '1rem 0'
+              }}
+              onChange={ev => setLoginEmail(ev.target.value)}
+              value={loginEmail || ''}
+            />
+          <TextField
+              id="login-password-input"
+              label="Nome"
+              type="text"
+              required
+              variant="outlined"
+              sx={{
+                margin: '1rem 0'
+              }}
+              onChange={ev => setLoginPassword(ev.target.value)}
+              value={loginPassword || ''}
+          />
           <Box
             sx={{
               display: 'flex'
@@ -68,7 +93,16 @@ const Login: React.FC = () => {
             />
             <Typography variant="body1">Lembrar acesso</Typography>
           </Box>
-          <DefaultButton text="Entrar" />
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              margin: '1rem 0',
+              padding: '.8rem'
+            }}
+          >
+            Entrar
+          </Button>
           <Box
             sx={{
               display: 'flex',

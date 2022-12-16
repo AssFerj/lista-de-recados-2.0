@@ -1,10 +1,12 @@
-import React from 'react';
-import { Stack, Grid, Divider, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Stack, Grid, Button, TextField } from '@mui/material';
 import ResponsiveAppBar from '../components/ResponsiveAppBar/ResponsiveAppBar';
-import { TaskTitleInput, TaskDescInput } from '../components/Inputs/Inputs';
-
+import bg from '../images/bg.png';
 
 const Home: React.FC = () => {
+  const [taskTitle, setTaskTitle] = useState<string>('');
+  const [taskDescription, setTaskDescription] = useState<string>('');
+
   return (
     <>
       <ResponsiveAppBar />
@@ -12,23 +14,53 @@ const Home: React.FC = () => {
         columns={12}
         container
         direction={'column'}
+        spacing={2}
         sx={{
+          backgroundImage: `url(${bg})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
           padding: '3rem',
           display: 'flex',
-          justifyContent: 'center',
+          flexFlow: 'column',
+          justifyContent: 'start',
           alignItens: 'center',
-          height: 'auto'
+          height: '100vh'
         }}
       >
-        <Grid item xs={12}>
-          <Stack 
-            component="form"
-            direction="row" 
-            justifyContent="center"
-            alignItems="center"
-            spacing={2}>
-            <TaskTitleInput id={'taskTitleInput'} label={'Título'}/>
-            <TaskDescInput id={'taskDescInput'} label={'Descrição'}/>
+        <Grid
+          item
+          spacing={2}
+          sx={{
+            background: '#ffffff',
+            borderRadius: '10px'
+          }}
+        >
+          <Stack component="form" direction="row" justifyContent="center" alignItems="center" spacing={2}>
+            <TextField
+              id="task-title-input"
+              label="Título"
+              type="text"
+              required
+              variant="outlined"
+              sx={{
+                margin: '1rem 0'
+              }}
+              onChange={ev => setTaskTitle(ev.target.value)}
+              value={taskTitle || ''}
+            />
+            <TextField
+              id="task-description-input"
+              label="Descrição"
+              type="text"
+              required
+              variant="outlined"
+              sx={{
+                margin: '1rem 0'
+              }}
+              onChange={ev => setTaskDescription(ev.target.value)}
+              value={taskDescription || ''}
+            />
             <Button
               variant="contained"
               size="large"
@@ -40,10 +72,9 @@ const Home: React.FC = () => {
               Salvar
             </Button>
           </Stack>
-        </Grid>
-        <Divider />
-        <Grid item xs={12}>
-
+          <Stack component="div" direction="row" justifyContent="center" alignItems="center" spacing={2}>
+            546464
+          </Stack>
         </Grid>
       </Grid>
     </>

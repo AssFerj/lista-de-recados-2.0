@@ -1,17 +1,29 @@
-import { Alert, Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
+import React, { useCallback, useState } from 'react';
 import bg from '../images/bg.png';
+import { addUser } from '../store/modules/UserSlice';
+import { UserType } from '../types';
+import { useAppDispatch } from '../store/hooks';
 
 const Cadastro: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-  // const handleSubmit = () => {
+  const handleSubmit = useCallback(
+    (user: UserType) => {
+      dispatch(addUser(user));
+    },
+    [dispatch, password, confirmPassword, firstName, lastName, email]
+  );
 
-  // };
+  console.log(firstName);
+  console.log(lastName);
+  console.log(email);
+  console.log(password);
 
   return (
     <Grid
@@ -30,17 +42,6 @@ const Cadastro: React.FC = () => {
         height: '100vh'
       }}
     >
-      <Grid item position={'absolute'}>
-        <Alert
-          sx={{
-            color: '#ffffff'
-          }}
-          variant="filled"
-          severity="success"
-        >
-          This is a success alert — check it out!
-        </Alert>
-      </Grid>
       <Grid
         item
         xl={3}
@@ -140,19 +141,20 @@ const Cadastro: React.FC = () => {
               onChange={ev => setConfirmPassword(ev.target.value)}
               value={confirmPassword || ''}
             />
-          </Stack>
-          <Stack>
             <Button
+              type="submit"
               variant="contained"
               size="large"
               sx={{
                 margin: '1rem 0',
                 padding: '.8rem'
               }}
+              onClick={() => handleSubmit(user)}
             >
               Cadastrar
             </Button>
           </Stack>
+          <Stack></Stack>
           <Box
             sx={{
               display: 'flex',
@@ -170,3 +172,6 @@ const Cadastro: React.FC = () => {
 };
 
 export default Cadastro;
+// function dispatch(arg0: any) {
+//   throw new Error('Function not implemented.');
+// }

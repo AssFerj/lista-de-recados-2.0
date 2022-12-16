@@ -1,5 +1,6 @@
-import UserTypes from './UserTypes';
-import TaskTypes from './TaskTypes';
-import AlertTypes from './AlertTypes';
+import UsersTypes from './UsersTypes';
+import UserType from './UserType';
+import TasksTypes from './TasksTypes';
+import TaskType from './TaskType';
 
-export type { UserTypes, TaskTypes, AlertTypes };
+export type { UsersTypes, UserType, TaskType, TasksTypes };

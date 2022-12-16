@@ -1,11 +1,10 @@
-import { TaskTypes } from '.';
+import { TasksTypes } from '.';
 
 interface UserType {
-  id: number;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  tasks?: TaskTypes[];
+  tasks?: TasksTypes[];
 }
 export default UserType;

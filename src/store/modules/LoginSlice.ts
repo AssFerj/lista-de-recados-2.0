@@ -16,9 +16,9 @@ const loginSlice = createSlice({
   name: 'login',
   initialState: adapter.getInitialState(),
   reducers: {
-    addOne: adapter.addOne
+    addLog: adapter.addOne
   }
 });
 
-export const { addOne } = loginSlice.actions;
+export const { addLog } = loginSlice.actions;
 export default loginSlice.reducer;

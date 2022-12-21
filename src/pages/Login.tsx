@@ -1,11 +1,39 @@
 import { Box, Button, Checkbox, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import bg from '../images/bg.png';
+import { useAppSelector } from '../store/hooks';
+import { addLog } from '../store/modules/LoginSlice';
+import { selectUserById } from '../store/modules/UsersSlice';
 
 const Login: React.FC = () => {
   const [loginEmail, setLoginEmail] = useState<string>('');
   const [loginPassword, setLoginPassword] = useState<string>('');
   const [isLogged, setIsLogged] = useState<boolean>(false);
+  const UserLogged = useAppSelector(state => selectUserById(state, email));
+
+  const clear = () => {
+    setLoginEmail('');
+    setLoginPassword('');
+    setIsLogged(false);
+  };
+
+  const handleLogin = () => {
+    const newLog: any = {
+      loginEmail: '',
+      loginPassword: '',
+      isLogged: false
+    };
+
+    if (loginEmail === 'admin@gmail.com' && loginPassword === 'admin') {
+      UserLogged?.isLogged(true);
+      alert('As senhas devem ser iguais e todos os campos devem ser preenchidos');
+      clear();
+      return;
+    }
+    dispatch(addLog(newLog));
+    clear();
+    navigate('/');
+  };
 
   return (
     <Grid
@@ -120,3 +148,10 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+function navigate(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.');
+}

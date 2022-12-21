@@ -1,29 +1,24 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
-interface LoginType {
+export interface login {
   email: string;
   password: string;
-  logged: boolean;
+  isLogged: boolean;
 }
 
-const initialState: LoginType = {
-  email: '',
-  password: '',
-  logged: false
-};
+const adapter = createEntityAdapter<login>({
+  selectId: item => item.email
+});
+
+export const { selectAll, selectById } = adapter.getSelectors((state: any) => state.login);
 
 const loginSlice = createSlice({
   name: 'login',
-  initialState,
+  initialState: adapter.getInitialState(),
   reducers: {
-    login(state, action: PayloadAction<LoginType>) {
-      return action.payload;
-    },
-    logout() {
-      return initialState;
-    }
+    addOne: adapter.addOne
   }
 });
 
-export const { login, logout } = loginSlice.actions;
+export const { addOne } = loginSlice.actions;
 export default loginSlice.reducer;

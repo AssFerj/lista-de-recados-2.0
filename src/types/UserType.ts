@@ -1,10 +1,10 @@
 import { TasksTypes } from '.';
 
 interface UserType {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   password: string;
   tasks?: TasksTypes[];
+  isLogged?: boolean;
 }
 export default UserType;

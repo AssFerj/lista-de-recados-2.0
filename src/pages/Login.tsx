@@ -5,6 +5,7 @@ import bg from '../images/bg.png';
 const Login: React.FC = () => {
   const [loginEmail, setLoginEmail] = useState<string>('');
   const [loginPassword, setLoginPassword] = useState<string>('');
+  const [isLogged, setIsLogged] = useState<boolean>(false);
 
   return (
     <Grid
@@ -87,6 +88,8 @@ const Login: React.FC = () => {
               sx={{
                 marginTop: '-10px'
               }}
+              checked={isLogged}
+              onChange={ev => setIsLogged(ev.target.checked)}
             />
             <Typography variant="body1">Lembrar acesso</Typography>
           </Box>

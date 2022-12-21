@@ -1,29 +1,54 @@
 import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import bg from '../images/bg.png';
-import { addUser } from '../store/modules/UserSlice';
-import { UserType } from '../types';
+import { createUser } from '../store/modules/UsersSlice';
 import { useAppDispatch } from '../store/hooks';
+import { UserType } from '../types';
+import { useNavigate } from 'react-router-dom';
 
 const Cadastro: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
+  const navigate = useNavigate();
+  const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
+  // const userRedux = useAppSelector(selectUser);
 
-  const handleSubmit = useCallback(
-    (user: UserType) => {
-      dispatch(addUser(user));
-    },
-    [dispatch, password, confirmPassword, firstName, lastName, email]
-  );
+  const clear = () => {
+    setName('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+  };
 
-  console.log(firstName);
-  console.log(lastName);
-  console.log(email);
-  console.log(password);
+  const handleSubmit = () => {
+    const newUser: UserType = {
+      name: '',
+      email: '',
+      password: '',
+      tasks: [],
+      isLogged: false
+    };
+
+    if (
+      password !== confirmPassword ||
+      password === '' ||
+      confirmPassword === '' ||
+      name === '' ||
+      email === '' ||
+      name.length < 3 ||
+      email.length < 3 ||
+      password.length < 3
+    ) {
+      alert('As senhas devem ser iguais e todos os campos devem ser preenchidos');
+      clear();
+      return;
+    }
+    dispatch(createUser(newUser));
+    clear();
+    navigate('/login');
+  };
 
   return (
     <Grid
@@ -73,7 +98,7 @@ const Cadastro: React.FC = () => {
           </Typography>
           <Stack direction="row" spacing={2} alignItems="center" width={'100%'}>
             <TextField
-              id="register-first-name-input"
+              id="register-name-input"
               label="Nome"
               type="text"
               required
@@ -82,21 +107,8 @@ const Cadastro: React.FC = () => {
               sx={{
                 margin: '1rem 0'
               }}
-              onChange={ev => setFirstName(ev.target.value)}
-              value={firstName || ''}
-            />
-            <TextField
-              id="register-last-name-input"
-              label="Sobrenome"
-              type="text"
-              required
-              fullWidth
-              variant="outlined"
-              sx={{
-                margin: '1rem 0'
-              }}
-              onChange={ev => setLastName(ev.target.value)}
-              value={lastName || ''}
+              onChange={ev => setName(ev.target.value)}
+              value={name || ''}
             />
           </Stack>
           <Stack>
@@ -141,20 +153,20 @@ const Cadastro: React.FC = () => {
               onChange={ev => setConfirmPassword(ev.target.value)}
               value={confirmPassword || ''}
             />
+          </Stack>
+          <Stack>
             <Button
-              type="submit"
               variant="contained"
               size="large"
               sx={{
                 margin: '1rem 0',
                 padding: '.8rem'
               }}
-              onClick={() => handleSubmit(user)}
+              onClick={() => handleSubmit()}
             >
               Cadastrar
             </Button>
           </Stack>
-          <Stack></Stack>
           <Box
             sx={{
               display: 'flex',
@@ -172,6 +184,10 @@ const Cadastro: React.FC = () => {
 };
 
 export default Cadastro;
+
+// function useAppSelector(state: any) {
+//   throw new Error('Function not implemented.');
+// }
 // function dispatch(arg0: any) {
 //   throw new Error('Function not implemented.');
 // }

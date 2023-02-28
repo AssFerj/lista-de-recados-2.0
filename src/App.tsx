@@ -1,5 +1,5 @@
-import { ThemeProvider } from '@mui/material';
 import React from 'react';
+import { ThemeProvider } from '@mui/material';
 import { themeLight } from './configs/Theme/Theme';
 import AppRoutes from './routes/AppRoutes';
 

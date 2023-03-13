@@ -20,7 +20,8 @@ const Home: React.FC = () => {
           maxWidth="xl"
           style={{
             display: 'flex',
-            justifyContent: 'space-evenly'
+            justifyContent: 'space-evenly',
+            alignItems: 'center'
           }}
         >
           <Grid item xl={12}>

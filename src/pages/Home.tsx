@@ -24,10 +24,36 @@ const Home: React.FC = () => {
             alignItems: 'center'
           }}
         >
-          <Grid item xl={12}>
+          <Grid
+            item
+            xl={12}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#fff',
+              padding: '1rem',
+              margin: '1rem',
+              borderRadius: '.5rem'
+            }}
+          >
             LEFT
           </Grid>
-          <Grid item xl={12}>
+          <Grid
+            item
+            xl={12}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#fff',
+              padding: '1rem',
+              margin: '1rem',
+              borderRadius: '.5rem'
+            }}
+          >
             RIGHT
           </Grid>
         </Container>

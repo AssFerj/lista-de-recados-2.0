@@ -29,20 +29,20 @@ export default function MenuAppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, position: 'absolute', top: '1.5rem', zIndex: 1, width: '90%' }}>
       <FormGroup>
         <FormControlLabel
-          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
+          control={<Switch sx={{ color: '#fff' }} checked={auth} onChange={handleChange} aria-label="login switch" />}
           label={auth ? 'Logout' : 'Login'}
         />
       </FormGroup>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ borderRadius: '.5rem' }}>
         <Toolbar>
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
+            Task-In
           </Typography>
           {auth && (
             <div>

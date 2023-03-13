@@ -1,6 +1,7 @@
 import { Container, Grid } from '@mui/material';
 // import bg from "../images/home-bg.png";
 import React from 'react';
+import AppBar from '../components/AppBar/AppBar';
 
 const Home: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const Home: React.FC = () => {
             alignItems: 'center'
           }}
         >
+          <AppBar />
           <Grid
             item
             xl={12}

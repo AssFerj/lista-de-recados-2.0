@@ -1,8 +1,10 @@
-import { Container, Grid } from '@mui/material';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 // import bg from "../images/home-bg.png";
 import React from 'react';
 import AppBar from '../components/AppBar/AppBar';
 import TaskForm from '../components/TaskForm/TaskForm';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Home: React.FC = () => {
   return (
@@ -52,13 +54,72 @@ const Home: React.FC = () => {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#fff',
-              padding: '1rem',
-              margin: '1rem',
-              borderRadius: '.5rem'
+              margin: '1rem'
             }}
           >
-            RIGHT
+            <Box
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: '#fff',
+                padding: '1rem',
+                marginBottom: '1rem',
+                borderRadius: '.5rem'
+              }}
+            >
+              <Typography variant="body1" padding={'.5rem 1rem'}>
+                Task 1
+              </Typography>
+              <Button>
+                <EditIcon />
+              </Button>
+              <Button>
+                <DeleteIcon />
+              </Button>
+            </Box>
+            <Box
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: '#fff',
+                padding: '1rem',
+                marginBottom: '1rem',
+                borderRadius: '.5rem'
+              }}
+            >
+              <Typography variant="body1" padding={'.5rem 1rem'}>
+                Task 2
+              </Typography>
+              <Button>
+                <EditIcon />
+              </Button>
+              <Button>
+                <DeleteIcon />
+              </Button>
+            </Box>
+            <Box
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: '#fff',
+                padding: '1rem',
+                marginBottom: '1rem',
+                borderRadius: '.5rem'
+              }}
+            >
+              <Typography variant="body1" padding={'.5rem 1rem'}>
+                Task 3
+              </Typography>
+              <Button>
+                <EditIcon />
+              </Button>
+              <Button>
+                <DeleteIcon />
+              </Button>
+            </Box>
           </Grid>
         </Container>
       </Grid>

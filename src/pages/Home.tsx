@@ -36,6 +36,7 @@ const Home: React.FC = () => {
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: '#fff',
+              maxWidth: '30%',
               padding: '1rem',
               margin: '1rem',
               borderRadius: '.5rem'

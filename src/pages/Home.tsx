@@ -2,6 +2,7 @@ import { Container, Grid } from '@mui/material';
 // import bg from "../images/home-bg.png";
 import React from 'react';
 import AppBar from '../components/AppBar/AppBar';
+import TaskForm from '../components/TaskForm/TaskForm';
 
 const Home: React.FC = () => {
   return (
@@ -40,7 +41,7 @@ const Home: React.FC = () => {
               borderRadius: '.5rem'
             }}
           >
-            LEFT
+            <TaskForm />
           </Grid>
           <Grid
             item

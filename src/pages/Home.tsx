@@ -63,7 +63,7 @@ const Home: React.FC = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 backgroundColor: '#fff',
-                padding: '1rem',
+                padding: '.5rem',
                 marginBottom: '1rem',
                 borderRadius: '.5rem'
               }}
@@ -84,7 +84,7 @@ const Home: React.FC = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 backgroundColor: '#fff',
-                padding: '1rem',
+                padding: '.5rem',
                 marginBottom: '1rem',
                 borderRadius: '.5rem'
               }}
@@ -105,7 +105,7 @@ const Home: React.FC = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 backgroundColor: '#fff',
-                padding: '1rem',
+                padding: '.5rem',
                 marginBottom: '1rem',
                 borderRadius: '.5rem'
               }}

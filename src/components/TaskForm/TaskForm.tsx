@@ -1,10 +1,9 @@
 import { Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
-export const [description, setDescription] = useState<string>('');
-export const [list, setList] = useState<string[]>([]);
-
 const TaskForm: React.FC = () => {
+  const [description, setDescription] = useState<string>('');
+  const [list, setList] = useState<string[]>([]);
   const handleSetDescription = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setDescription(e.currentTarget.value);
   };
@@ -14,7 +13,6 @@ const TaskForm: React.FC = () => {
       setList([...list, description]);
     }
   };
-
   return (
     <React.Fragment>
       <Typography variant="h6" mb={5}>
@@ -32,13 +30,13 @@ const TaskForm: React.FC = () => {
       <Button variant="contained" fullWidth onClick={addTask}>
         Cadastrar
       </Button>
-      {/* {list.map(item => {
+      {list.map(item => {
         return (
           <Typography variant="body1" key={item}>
             {item}
           </Typography>
         );
-      })} */}
+      })}
     </React.Fragment>
   );
 };

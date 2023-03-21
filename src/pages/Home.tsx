@@ -1,29 +1,37 @@
 import { Alert, Box, Button, Collapse, Container, Grid, IconButton, TextField, Typography } from '@mui/material';
-// import bg from "../images/home-bg.png";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '../components/AppBar/AppBar';
 // import TaskForm from '../components/TaskForm/TaskForm';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
-// eslint-disable-next-line no-unused-vars
-// import { themeDark, themeLight } from '../configs/Theme/Theme';
+import TaskType from '../types/TaskType';
+import generateId from '../utils/generateId';
 
 const Home: React.FC = () => {
-  // const [theme, setTheme] = useState('light');
+  const [tasks, setTasks] = useState<TaskType[]>([]);
   const [description, setDescription] = useState<string>('');
-  const [list, setList] = useState<string[]>([]);
   const [open, setOpen] = React.useState(false);
+  const [valid, setValid] = useState<boolean>(false);
+
+  useEffect(() => {
+    description.length >= 3 ? setValid(true) : setValid(false);
+  }, [description]);
+
+  useEffect(() => {
+    console.log(tasks);
+  }, [tasks]);
 
   const handleSetDescription = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setDescription(e.currentTarget.value);
   };
 
   const addTask = () => {
-    if (description.length) {
-      setList([...list, description]);
-      setOpen(true);
-    }
+    // if (tasks.length) {
+    setTasks([...tasks, { id: generateId(), description: description }]);
+    setDescription('');
+    setOpen(true);
+    // }
   };
 
   return (
@@ -108,9 +116,10 @@ const Home: React.FC = () => {
               fullWidth
               type={'text'}
               sx={{ marginBottom: 3 }}
+              value={description}
               onChange={e => handleSetDescription(e)}
             />
-            <Button variant="contained" fullWidth onClick={addTask}>
+            <Button variant="contained" fullWidth onClick={addTask} disabled={!valid}>
               Cadastrar
             </Button>
           </Grid>
@@ -125,11 +134,10 @@ const Home: React.FC = () => {
               margin: '1rem'
             }}
           >
-            {list.map(item => {
-              // setTheme('light');
+            {tasks.map(item => {
               return (
                 <Box
-                  key={item}
+                  key={item.id}
                   style={{
                     width: '30em',
                     display: 'flex',
@@ -149,7 +157,7 @@ const Home: React.FC = () => {
                     }}
                   >
                     <Typography variant="body1" padding={'.5rem 1rem'}>
-                      {item}
+                      {item.description}
                     </Typography>
                     <Button>
                       <EditIcon />

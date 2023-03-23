@@ -1,25 +1,40 @@
-import { Alert, Box, Button, Collapse, Container, Grid, IconButton, TextField, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Alert, Button, Collapse, Container, Grid, IconButton, TextField, Typography } from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
 import AppBar from '../components/AppBar/AppBar';
-// import TaskForm from '../components/TaskForm/TaskForm';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import TaskType from '../types/TaskType';
 import generateId from '../utils/generateId';
+import ListingTasks from '../components/ListingTasks/ListingTasks';
+import TaskForm from '../components/TaskForm/TaskForm';
+import ConfirmDialog from '../components/ConfirmDialog/ConfirmDialog';
 
 const Home: React.FC = () => {
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [description, setDescription] = useState<string>('');
   const [open, setOpen] = React.useState(false);
   const [valid, setValid] = useState<boolean>(false);
+  const [openConfirm, setOpenConfirm] = React.useState(false);
+  const [idRemove, setIdRemove] = useState<number | undefined>();
+
+  const ClickOpenConfirm = (id: number) => {
+    setOpenConfirm(true);
+    setIdRemove(id);
+  };
+
+  const CloseConfirm = () => {
+    setOpenConfirm(false);
+  };
 
   useEffect(() => {
     description.length >= 3 ? setValid(true) : setValid(false);
   }, [description]);
 
-  useEffect(() => {
-    console.log(tasks);
+  const listTasks = useMemo(() => {
+    return tasks.map(item => {
+      return (
+        <ListingTasks key={item.id} description={item.description} actionConfirm={() => ClickOpenConfirm(item.id)} />
+      );
+    });
   }, [tasks]);
 
   const handleSetDescription = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -27,11 +42,20 @@ const Home: React.FC = () => {
   };
 
   const addTask = () => {
-    // if (tasks.length) {
     setTasks([...tasks, { id: generateId(), description: description }]);
     setDescription('');
     setOpen(true);
-    // }
+  };
+
+  const deleteTask = () => {
+    const index = tasks.findIndex(item => item.id === idRemove);
+    if (index !== -1) {
+      setTasks(prevState => {
+        prevState.splice(index, 1);
+        return [...prevState];
+      });
+    }
+    setOpenConfirm(false);
   };
 
   return (
@@ -44,7 +68,7 @@ const Home: React.FC = () => {
           padding: 0,
           position: 'absolute',
           zIndex: 999,
-          top: 5,
+          bottom: 5,
           right: 5
         }}
       >
@@ -105,7 +129,7 @@ const Home: React.FC = () => {
               borderRadius: '.5rem'
             }}
           >
-            {/* <TaskForm /> */}
+            {/* <TaskForm title='Cadastrar Tarefas' description={description} buttonText='Cadastrar' actionSetDescription={e => handleSetDescription(e)} actionAddTask={addTask} /> */}
             <Typography variant="h6" mb={5}>
               Cadastrar Tarefas
             </Typography>
@@ -134,41 +158,34 @@ const Home: React.FC = () => {
               margin: '1rem'
             }}
           >
-            {tasks.map(item => {
-              return (
-                <Box
-                  key={item.id}
-                  style={{
-                    width: '30em',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#fff',
-                    padding: '.5rem',
-                    marginBottom: '1rem',
-                    borderRadius: '.5rem'
-                  }}
-                >
-                  <Box
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <Typography variant="body1" padding={'.5rem 1rem'}>
-                      {item.description}
-                    </Typography>
-                    <Button>
-                      <EditIcon />
-                    </Button>
-                    <Button>
-                      <DeleteIcon />
-                    </Button>
-                  </Box>
-                </Box>
-              );
-            })}
+            {/* <Dialog
+              open={openConfirm}
+              onClose={CloseConfirm}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">{'Tem certeza que quer excluir esse recado?'}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  <Typography variant="body1">{}</Typography>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={CloseConfirm}>Cancelar</Button>
+                <Button onClick={deleteTask} autoFocus>
+                  Excluir
+                </Button>
+              </DialogActions>
+            </Dialog> */}
+            <ConfirmDialog
+              title={'Tem certeza que quer excluir esse recado?'}
+              cancelText="Cancelar"
+              confirmText="Excluir"
+              openConfirm={openConfirm}
+              actionCloseConfirm={CloseConfirm}
+              actionDeleteTask={deleteTask}
+            />
+            {listTasks}
           </Grid>
         </Container>
       </Grid>

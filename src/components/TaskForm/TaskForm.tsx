@@ -1,22 +1,19 @@
 import { Button, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 
-const TaskForm: React.FC = () => {
-  const [description, setDescription] = useState<string>('');
-  const [list, setList] = useState<string[]>([]);
-  const handleSetDescription = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setDescription(e.currentTarget.value);
-  };
+interface TaskFormProps {
+  title: string;
+  description: string;
+  buttonText: string;
+  actionSetDescription: () => void;
+  actionAddTask: () => void;
+}
 
-  const addTask = () => {
-    if (description.length) {
-      setList([...list, description]);
-    }
-  };
+const TaskForm: React.FC<TaskFormProps> = ({ title, description, buttonText, actionSetDescription, actionAddTask }) => {
   return (
     <React.Fragment>
       <Typography variant="h6" mb={5}>
-        Cadastrar Tarefas
+        {title}
       </Typography>
       <TextField
         id="task-description"
@@ -25,18 +22,12 @@ const TaskForm: React.FC = () => {
         fullWidth
         type={'text'}
         sx={{ marginBottom: 3 }}
-        onChange={e => handleSetDescription(e)}
+        value={description}
+        onChange={actionSetDescription}
       />
-      <Button variant="contained" fullWidth onClick={addTask}>
-        Cadastrar
+      <Button variant="contained" fullWidth onClick={actionAddTask}>
+        {buttonText}
       </Button>
-      {list.map(item => {
-        return (
-          <Typography variant="body1" key={item}>
-            {item}
-          </Typography>
-        );
-      })}
     </React.Fragment>
   );
 };

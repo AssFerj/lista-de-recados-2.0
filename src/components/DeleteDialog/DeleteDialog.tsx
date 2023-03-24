@@ -9,20 +9,22 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-interface ConfirmDialogProps {
+interface DeleteDialogProps {
   title: string;
   openConfirm: boolean;
   cancelText: string;
   confirmText: string;
+  itemDescription: any;
   actionCloseConfirm: () => void;
   actionDeleteTask: () => void;
 }
 
-const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
+const DeleteDialog: React.FC<DeleteDialogProps> = ({
   title,
   openConfirm,
   cancelText,
   confirmText,
+  itemDescription,
   actionCloseConfirm,
   actionDeleteTask
 }) => {
@@ -37,7 +39,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <Typography variant="body1">{}</Typography>
+            <Typography variant="body1">{itemDescription}</Typography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -51,4 +53,4 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   );
 };
 
-export default ConfirmDialog;
+export default DeleteDialog;

@@ -1,12 +1,12 @@
-import { Alert, Button, Collapse, Container, Grid, IconButton, TextField, Typography } from '@mui/material';
+import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import AppBar from '../components/AppBar/AppBar';
-import CloseIcon from '@mui/icons-material/Close';
 import TaskType from '../types/TaskType';
 import generateId from '../utils/generateId';
 import ListingTasks from '../components/ListingTasks/ListingTasks';
 import TaskForm from '../components/TaskForm/TaskForm';
-import ConfirmDialog from '../components/ConfirmDialog/ConfirmDialog';
+import DeleteDialog from '../components/DeleteDialog/DeleteDialog';
+import AlertComponent from '../components/AlertComponent/AlertComponent';
 
 const Home: React.FC = () => {
   const [tasks, setTasks] = useState<TaskType[]>([]);
@@ -14,11 +14,11 @@ const Home: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const [valid, setValid] = useState<boolean>(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
-  const [idRemove, setIdRemove] = useState<number | undefined>();
+  const [taskRemove, setTaskRemove] = useState<TaskType | undefined>();
 
-  const ClickOpenConfirm = (id: number) => {
+  const ClickOpenConfirm = (itemRemove: TaskType) => {
     setOpenConfirm(true);
-    setIdRemove(id);
+    setTaskRemove(itemRemove);
   };
 
   const CloseConfirm = () => {
@@ -31,9 +31,7 @@ const Home: React.FC = () => {
 
   const listTasks = useMemo(() => {
     return tasks.map(item => {
-      return (
-        <ListingTasks key={item.id} description={item.description} actionConfirm={() => ClickOpenConfirm(item.id)} />
-      );
+      return <ListingTasks key={item.id} description={item.description} actionConfirm={() => ClickOpenConfirm(item)} />;
     });
   }, [tasks]);
 
@@ -47,8 +45,36 @@ const Home: React.FC = () => {
     setOpen(true);
   };
 
+  const showAlert = () => {
+    setOpen(true);
+    return (
+      <AlertComponent
+        typeAlert="error"
+        message="Recado excluído com sucesso!"
+        actionShowAlert={open}
+        actionShowAlertFc={() => {
+          setOpen(false);
+        }}
+      />
+    );
+  };
+
   const deleteTask = () => {
-    const index = tasks.findIndex(item => item.id === idRemove);
+    // const dangerAlert = () => {
+    //   setOpen(true);
+    //   return (
+    //     <AlertComponent
+    //       typeAlert="error"
+    //       message="Recado excluído com sucesso!"
+    //       actionShowAlert={open}
+    //       actionShowAlertFc={() => {
+    //         setOpen(false);
+    //       }}
+    //     />
+    //   );
+    // };
+
+    const index = tasks.findIndex(item => item.id === taskRemove?.id);
     if (index !== -1) {
       setTasks(prevState => {
         prevState.splice(index, 1);
@@ -56,42 +82,19 @@ const Home: React.FC = () => {
       });
     }
     setOpenConfirm(false);
+    showAlert();
   };
 
   return (
     <React.Fragment>
-      {/* Alert Component Start */}
-      <Collapse
-        in={open}
-        style={{
-          margin: 0,
-          padding: 0,
-          position: 'absolute',
-          zIndex: 999,
-          bottom: 5,
-          right: 5
+      <AlertComponent
+        typeAlert="success"
+        message="Recado adicionado com sucesso!"
+        actionShowAlert={open}
+        actionShowAlertFc={() => {
+          setOpen(false);
         }}
-      >
-        <Alert
-          severity="success"
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setOpen(false);
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
-          sx={{ mb: 2 }}
-        >
-          Recado adicionado com sucesso!
-        </Alert>
-      </Collapse>
-      {/* Alert Component End */}
+      />
 
       <Grid
         container
@@ -105,11 +108,11 @@ const Home: React.FC = () => {
         }}
       >
         <Container
-          maxWidth="xl"
           style={{
             display: 'flex',
             justifyContent: 'space-evenly',
-            alignItems: 'center'
+            alignItems: 'start',
+            marginTop: '5em'
           }}
         >
           <AppBar />
@@ -129,7 +132,13 @@ const Home: React.FC = () => {
               borderRadius: '.5rem'
             }}
           >
-            {/* <TaskForm title='Cadastrar Tarefas' description={description} buttonText='Cadastrar' actionSetDescription={e => handleSetDescription(e)} actionAddTask={addTask} /> */}
+            {/* <TaskForm
+              title="Cadastrar Tarefas"
+              description={description}
+              buttonText="Cadastrar"
+              actionSetDescription={e => handleSetDescription(e)}
+              actionAddTask={addTask}
+            /> */}
             <Typography variant="h6" mb={5}>
               Cadastrar Tarefas
             </Typography>
@@ -158,29 +167,11 @@ const Home: React.FC = () => {
               margin: '1rem'
             }}
           >
-            {/* <Dialog
-              open={openConfirm}
-              onClose={CloseConfirm}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">{'Tem certeza que quer excluir esse recado?'}</DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  <Typography variant="body1">{}</Typography>
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={CloseConfirm}>Cancelar</Button>
-                <Button onClick={deleteTask} autoFocus>
-                  Excluir
-                </Button>
-              </DialogActions>
-            </Dialog> */}
-            <ConfirmDialog
+            <DeleteDialog
               title={'Tem certeza que quer excluir esse recado?'}
               cancelText="Cancelar"
               confirmText="Excluir"
+              itemDescription={taskRemove?.description}
               openConfirm={openConfirm}
               actionCloseConfirm={CloseConfirm}
               actionDeleteTask={deleteTask}

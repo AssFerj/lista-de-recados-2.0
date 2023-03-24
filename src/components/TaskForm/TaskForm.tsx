@@ -5,11 +5,16 @@ interface TaskFormProps {
   title: string;
   description: string;
   buttonText: string;
-  actionSetDescription: () => void;
-  actionAddTask: () => void;
+  actionSetDescription: () => Event;
+  // actionAddTask: () => Void;
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ title, description, buttonText, actionSetDescription, actionAddTask }) => {
+const TaskForm: React.FC<TaskFormProps> = ({
+  title,
+  description,
+  buttonText,
+  actionSetDescription /*actionAddTask*/
+}) => {
   return (
     <React.Fragment>
       <Typography variant="h6" mb={5}>
@@ -25,7 +30,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ title, description, buttonText, act
         value={description}
         onChange={actionSetDescription}
       />
-      <Button variant="contained" fullWidth onClick={actionAddTask}>
+      <Button variant="contained" fullWidth /*onClick={actionAddTask}*/>
         {buttonText}
       </Button>
     </React.Fragment>

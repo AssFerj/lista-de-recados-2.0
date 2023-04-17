@@ -1,100 +1,116 @@
-import { Button, Container, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import AppBar from '../components/AppBar/AppBar';
 import TaskType from '../types/TaskType';
 import generateId from '../utils/generateId';
-import ListingTasks from '../components/ListingTasks/ListingTasks';
-import TaskForm from '../components/TaskForm/TaskForm';
 import DeleteDialog from '../components/DeleteDialog/DeleteDialog';
 import AlertComponent from '../components/AlertComponent/AlertComponent';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { addTask, removeTask, selectAll } from '../store/modules/tasksSlice';
 
 const Home: React.FC = () => {
-  const [tasks, setTasks] = useState<TaskType[]>([]);
   const [description, setDescription] = useState<string>('');
   const [open, setOpen] = React.useState(false);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
   const [valid, setValid] = useState<boolean>(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
-  const [taskRemove, setTaskRemove] = useState<TaskType | undefined>();
+  // const [taskRemove, setTaskRemove] = useState<TaskType | undefined>();
+  const TasksRedux = useAppSelector(selectAll);
+  const dispatch = useAppDispatch();
 
-  const ClickOpenConfirm = (itemRemove: TaskType) => {
-    setOpenConfirm(true);
-    setTaskRemove(itemRemove);
-  };
+  // const ClickOpenConfirm = () => {
+  //   setOpenConfirm(true);
+  // };
 
-  const CloseConfirm = () => {
-    setOpenConfirm(false);
-  };
+  // const CloseConfirm = () => {
+  //   setOpenConfirm(false);
+  // };
 
   useEffect(() => {
     description.length >= 3 ? setValid(true) : setValid(false);
   }, [description]);
 
   const listTasks = useMemo(() => {
-    return tasks.map(item => {
-      return <ListingTasks key={item.id} description={item.description} actionConfirm={() => ClickOpenConfirm(item)} />;
+    return TasksRedux?.map(item => {
+      return (
+        <Box
+          key={item.id}
+          style={{
+            width: '30em',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#fff',
+            padding: '.5rem',
+            marginBottom: '1rem',
+            borderRadius: '.5rem'
+          }}
+        >
+          <Box
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Typography variant="body1" padding={'.5rem 1rem'}>
+              {item.description}
+            </Typography>
+            <Button>
+              <EditIcon />
+            </Button>
+            <Button onClick={() => actionDeleteTask(item)}>
+              <DeleteIcon />
+            </Button>
+          </Box>
+        </Box>
+      );
     });
-  }, [tasks]);
+  }, [TasksRedux]);
 
   const handleSetDescription = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setDescription(e.currentTarget.value);
   };
 
-  const addTask = () => {
-    setTasks([...tasks, { id: generateId(), description: description }]);
+  const addNewTask = () => {
+    const newTask: TaskType = { id: generateId(), description: description };
+    dispatch(addTask(newTask));
     setDescription('');
     setOpen(true);
+    setShowAlert(true);
   };
 
-  const showAlert = () => {
-    setOpen(true);
-    return (
-      <AlertComponent
-        typeAlert="error"
-        message="Recado excluído com sucesso!"
-        actionShowAlert={open}
-        actionShowAlertFc={() => {
-          setOpen(false);
-        }}
-      />
-    );
-  };
-
-  const deleteTask = () => {
-    // const dangerAlert = () => {
-    //   setOpen(true);
-    //   return (
-    //     <AlertComponent
-    //       typeAlert="error"
-    //       message="Recado excluído com sucesso!"
-    //       actionShowAlert={open}
-    //       actionShowAlertFc={() => {
-    //         setOpen(false);
-    //       }}
-    //     />
-    //   );
-    // };
-
-    const index = tasks.findIndex(item => item.id === taskRemove?.id);
-    if (index !== -1) {
-      setTasks(prevState => {
-        prevState.splice(index, 1);
-        return [...prevState];
-      });
-    }
+  const actionDeleteTask = (itemRemove: TaskType) => {
+    setOpenConfirm(true);
+    dispatch(removeTask(itemRemove.description));
     setOpenConfirm(false);
-    showAlert();
+    setOpen(true);
+    setShowAlert(false);
   };
 
   return (
     <React.Fragment>
-      <AlertComponent
-        typeAlert="success"
-        message="Recado adicionado com sucesso!"
-        actionShowAlert={open}
-        actionShowAlertFc={() => {
-          setOpen(false);
-        }}
-      />
+      {showAlert === true ? (
+        <AlertComponent
+          typeAlert="success"
+          message="Recado adicionado com sucesso!"
+          actionShowAlert={open}
+          actionShowAlertFc={() => {
+            setOpen(false);
+          }}
+        />
+      ) : (
+        <AlertComponent
+          typeAlert="error"
+          message="Recado excluído com sucesso!"
+          actionShowAlert={open}
+          actionShowAlertFc={() => {
+            setOpen(false);
+          }}
+        />
+      )}
 
       <Grid
         container
@@ -132,13 +148,6 @@ const Home: React.FC = () => {
               borderRadius: '.5rem'
             }}
           >
-            {/* <TaskForm
-              title="Cadastrar Tarefas"
-              description={description}
-              buttonText="Cadastrar"
-              actionSetDescription={e => handleSetDescription(e)}
-              actionAddTask={addTask}
-            /> */}
             <Typography variant="h6" mb={5}>
               Cadastrar Tarefas
             </Typography>
@@ -152,7 +161,7 @@ const Home: React.FC = () => {
               value={description}
               onChange={e => handleSetDescription(e)}
             />
-            <Button variant="contained" fullWidth onClick={addTask} disabled={!valid}>
+            <Button variant="contained" fullWidth onClick={addNewTask} disabled={!valid}>
               Cadastrar
             </Button>
           </Grid>
@@ -167,15 +176,15 @@ const Home: React.FC = () => {
               margin: '1rem'
             }}
           >
-            <DeleteDialog
+            {/* <DeleteDialog
               title={'Tem certeza que quer excluir esse recado?'}
               cancelText="Cancelar"
               confirmText="Excluir"
               itemDescription={taskRemove?.description}
               openConfirm={openConfirm}
               actionCloseConfirm={CloseConfirm}
-              actionDeleteTask={deleteTask}
-            />
+              actionDeleteTask={() => actionDeleteTask(taskRemove)}
+            /> */}
             {listTasks}
           </Grid>
         </Container>

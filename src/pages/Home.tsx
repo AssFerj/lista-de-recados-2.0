@@ -8,7 +8,7 @@ import AlertComponent from '../components/AlertComponent/AlertComponent';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { addTask, removeTask, updateTask, selectAll } from '../store/modules/tasksSlice';
+import { addTask, removeTask, selectAll, updateTask } from '../store/modules/tasksSlice';
 
 const Home: React.FC = () => {
   const [description, setDescription] = useState<string>('');
@@ -82,15 +82,9 @@ const Home: React.FC = () => {
     setShowAlert(true);
   };
 
-  const handleDeleteTask = (itemRemove: TaskType) => {
-    setOpenConfirm(true);
-    dispatch(removeTask(itemRemove.id));
-    setOpenConfirm(false);
-    setOpen(true);
-    setShowAlert(false);
-  };
+  // const handleEditTask = (itemEdit: TaskType) => {};
 
-  const handleEditTask = (itemEdit: TaskType) => {
+  const handleDeleteTask = (itemRemove: TaskType) => {
     setOpenConfirm(true);
     // dispatch(updateTask(itemEdit.id));
     setOpenConfirm(false);

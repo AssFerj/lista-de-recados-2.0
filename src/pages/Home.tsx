@@ -8,7 +8,7 @@ import AlertComponent from '../components/AlertComponent/AlertComponent';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { addTask, removeTask, selectAll } from '../store/modules/tasksSlice';
+import { addTask, removeTask, updateTask, selectAll } from '../store/modules/tasksSlice';
 
 const Home: React.FC = () => {
   const [description, setDescription] = useState<string>('');
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
             <Button>
               <EditIcon />
             </Button>
-            <Button onClick={() => actionDeleteTask(item)}>
+            <Button onClick={() => handleDeleteTask(item)}>
               <DeleteIcon />
             </Button>
           </Box>
@@ -74,7 +74,7 @@ const Home: React.FC = () => {
     setDescription(e.currentTarget.value);
   };
 
-  const addNewTask = () => {
+  const handleAddTask = () => {
     const newTask: TaskType = { id: generateId(), description: description };
     dispatch(addTask(newTask));
     setDescription('');
@@ -82,9 +82,17 @@ const Home: React.FC = () => {
     setShowAlert(true);
   };
 
-  const actionDeleteTask = (itemRemove: TaskType) => {
+  const handleDeleteTask = (itemRemove: TaskType) => {
     setOpenConfirm(true);
-    dispatch(removeTask(itemRemove.description));
+    dispatch(removeTask(itemRemove.id));
+    setOpenConfirm(false);
+    setOpen(true);
+    setShowAlert(false);
+  };
+
+  const handleEditTask = (itemEdit: TaskType) => {
+    setOpenConfirm(true);
+    // dispatch(updateTask(itemEdit.id));
     setOpenConfirm(false);
     setOpen(true);
     setShowAlert(false);
@@ -161,7 +169,7 @@ const Home: React.FC = () => {
               value={description}
               onChange={e => handleSetDescription(e)}
             />
-            <Button variant="contained" fullWidth onClick={addNewTask} disabled={!valid}>
+            <Button variant="contained" fullWidth onClick={handleAddTask} disabled={!valid}>
               Cadastrar
             </Button>
           </Grid>
@@ -183,7 +191,7 @@ const Home: React.FC = () => {
               itemDescription={taskRemove?.description}
               openConfirm={openConfirm}
               actionCloseConfirm={CloseConfirm}
-              actionDeleteTask={() => actionDeleteTask(taskRemove)}
+              handleDeleteTask={() => handleDeleteTask(taskRemove)}
             /> */}
             {listTasks}
           </Grid>

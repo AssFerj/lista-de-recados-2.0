@@ -14,6 +14,7 @@ const Home: React.FC = () => {
   const [description, setDescription] = useState<string>('');
   const [open, setOpen] = React.useState(false);
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [typeAlert, setTypeAlert] = useState<string>('add' | 'edit' | 'delete');
   const [valid, setValid] = useState<boolean>(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
   // const [taskRemove, setTaskRemove] = useState<TaskType | undefined>();

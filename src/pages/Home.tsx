@@ -8,7 +8,7 @@ import AlertComponent from '../components/AlertComponent/AlertComponent';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { addTask, removeTask, selectAll, updateTask } from '../store/modules/tasksSlice';
+import { addTask, removeTask, selectAll, selectById, updateTask } from '../store/modules/tasksSlice';
 
 const Home: React.FC = () => {
   const [description, setDescription] = useState<string>('');
@@ -17,17 +17,18 @@ const Home: React.FC = () => {
   const [typeAlert, setTypeAlert] = useState<string>('add' | 'edit' | 'delete');
   const [valid, setValid] = useState<boolean>(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
+  const [taskToEdit, setTaskToEdit] = useState({} as TaskType);
   // const [taskRemove, setTaskRemove] = useState<TaskType | undefined>();
   const TasksRedux = useAppSelector(selectAll);
   const dispatch = useAppDispatch();
 
-  // const ClickOpenConfirm = () => {
-  //   setOpenConfirm(true);
-  // };
+  const ClickOpenConfirm = () => {
+    setOpenConfirm(true);
+  };
 
-  // const CloseConfirm = () => {
-  //   setOpenConfirm(false);
-  // };
+  const CloseConfirm = () => {
+    setOpenConfirm(false);
+  };
 
   useEffect(() => {
     description.length >= 3 ? setValid(true) : setValid(false);
@@ -59,7 +60,7 @@ const Home: React.FC = () => {
             <Typography variant="body1" padding={'.5rem 1rem'}>
               {item.description}
             </Typography>
-            <Button>
+            <Button onClick={() => handleEditTask(item)}>
               <EditIcon />
             </Button>
             <Button onClick={() => handleDeleteTask(item)}>
@@ -83,11 +84,16 @@ const Home: React.FC = () => {
     setShowAlert(true);
   };
 
-  // const handleEditTask = (itemEdit: TaskType) => {};
+  const handleEditTask = (itemEdit: TaskType) => {
+    // const item = useAppSelector(state => selectById(state, itemEdit.id));
+    const itemRedux = TasksRedux.find(item => item.id === itemEdit.id);
+    setTaskToEdit(itemRedux!);
+    setOpenConfirm(true);
+  };
 
   const handleDeleteTask = (itemRemove: TaskType) => {
     setOpenConfirm(true);
-    dispatch(removeTask(itemRemove.description));
+    dispatch(removeTask(itemRemove.id));
     setOpenConfirm(false);
     setOpen(true);
     setShowAlert(false);
@@ -179,15 +185,15 @@ const Home: React.FC = () => {
               margin: '1rem'
             }}
           >
-            {/* <DeleteDialog
+            <DeleteDialog
               title={'Tem certeza que quer excluir esse recado?'}
               cancelText="Cancelar"
               confirmText="Excluir"
-              itemDescription={taskRemove?.description}
+              itemDescription={taskToEdit?.description}
               openConfirm={openConfirm}
               actionCloseConfirm={CloseConfirm}
-              handleDeleteTask={() => handleDeleteTask(taskRemove)}
-            /> */}
+              actionDeleteTask={() => handleEditTask(taskToEdit)}
+            />
             {listTasks}
           </Grid>
         </Container>

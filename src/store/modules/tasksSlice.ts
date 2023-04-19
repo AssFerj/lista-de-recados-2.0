@@ -3,7 +3,7 @@ import TaskType from '../../types/TaskType';
 import { RootState } from '../store';
 
 const adapter = createEntityAdapter<TaskType>({
-  selectId: item => item.description
+  selectId: item => item.id
 });
 
 export const { selectAll, selectById } = adapter.getSelectors((state: RootState) => state.tasks);

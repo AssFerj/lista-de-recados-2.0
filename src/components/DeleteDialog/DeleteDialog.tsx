@@ -16,7 +16,7 @@ interface DeleteDialogProps {
   confirmText: string;
   itemDescription: any;
   actionCloseConfirm: () => void;
-  actionDeleteTask: () => void;
+  actionDeleteTask: (item: any) => void;
 }
 
 const DeleteDialog: React.FC<DeleteDialogProps> = ({

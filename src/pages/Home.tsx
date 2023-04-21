@@ -21,9 +21,9 @@ const Home: React.FC = () => {
   const TasksRedux = useAppSelector(selectAll);
   const dispatch = useAppDispatch();
 
-  const ClickOpenConfirm = () => {
-    setOpenConfirm(true);
-  };
+  // const ClickOpenConfirm = () => {
+  //   setOpenConfirm(true);
+  // };
 
   const CloseConfirm = () => {
     setOpenConfirm(false);
@@ -86,8 +86,10 @@ const Home: React.FC = () => {
   const handleEditTask = (itemEdit: TaskType) => {
     // const item = useAppSelector(state => selectById(state, itemEdit.id));
     const itemRedux = TasksRedux.find(item => item.id === itemEdit.id);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     setTaskToEdit(itemRedux!);
     setOpenConfirm(true);
+    dispatch(updateTask);
   };
 
   const handleDeleteTask = (itemRemove: TaskType) => {

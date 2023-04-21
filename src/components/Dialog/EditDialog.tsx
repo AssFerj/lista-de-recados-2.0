@@ -5,46 +5,48 @@ import {
   DialogContentText,
   Typography,
   DialogActions,
-  Button
+  Button,
+  TextField
 } from '@mui/material';
 import React from 'react';
 
-interface DeleteDialogProps {
+interface EditDialogProps {
   title: string;
-  openConfirm: boolean;
+  openEditConfirm: boolean;
   cancelText: string;
   confirmText: string;
   itemDescription: any;
-  actionCloseConfirm: () => void;
-  actionDeleteTask: (item: any) => void;
+  actionCloseEditConfirm: () => void;
+  actionEditTask: (item: any) => void;
 }
 
-const DeleteDialog: React.FC<DeleteDialogProps> = ({
+const EditDialog: React.FC<EditDialogProps> = ({
   title,
-  openConfirm,
+  openEditConfirm,
   cancelText,
   confirmText,
   itemDescription,
-  actionCloseConfirm,
-  actionDeleteTask
+  actionCloseEditConfirm,
+  actionEditTask
 }) => {
   return (
     <React.Fragment>
       <Dialog
-        open={openConfirm}
-        onClose={actionCloseConfirm}
+        open={openEditConfirm}
+        onClose={actionCloseEditConfirm}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <Typography variant="body1">{itemDescription}</Typography>
+            <TextField fullWidth value={itemDescription} />
+            {/* <Typography variant="body1">{itemDescription}</Typography> */}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={actionCloseConfirm}>{cancelText}</Button>
-          <Button onClick={actionDeleteTask} autoFocus>
+          <Button onClick={actionCloseEditConfirm}>{cancelText}</Button>
+          <Button onClick={actionEditTask} autoFocus>
             {confirmText}
           </Button>
         </DialogActions>
@@ -53,4 +55,4 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
   );
 };
 
-export default DeleteDialog;
+export default EditDialog;

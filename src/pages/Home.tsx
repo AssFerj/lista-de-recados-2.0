@@ -3,30 +3,42 @@ import React, { useEffect, useMemo, useState } from 'react';
 import AppBar from '../components/AppBar/AppBar';
 import TaskType from '../types/TaskType';
 import generateId from '../utils/generateId';
-import DeleteDialog from '../components/DeleteDialog/DeleteDialog';
 import AlertComponent from '../components/AlertComponent/AlertComponent';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { addTask, removeTask, selectAll, selectById, updateTask } from '../store/modules/tasksSlice';
+import EditDialog from '../components/Dialog/EditDialog';
+import DeleteDialog from '../components/Dialog/DeleteDialog';
 
 const Home: React.FC = () => {
   const [description, setDescription] = useState<string>('');
+  const [editedDescription, setEditedDescription] = useState<string>('');
+
   const [open, setOpen] = React.useState(false);
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  // const [typeAlert, setTypeAlert] = useState<string>('add' | 'edit' | 'delete');
+
   const [valid, setValid] = useState<boolean>(false);
-  const [openConfirm, setOpenConfirm] = React.useState(false);
+
+  const [openEditConfirm, setOpenEditConfirm] = React.useState(false);
+  const [openDeleteConfirm, setOpenDeleteConfirm] = React.useState(false);
+
   const [taskToEdit, setTaskToEdit] = useState({} as TaskType);
-  // const [taskRemove, setTaskRemove] = useState<TaskType | undefined>();
+  const [taskRemove, setTaskRemove] = useState({} as TaskType);
   const TasksRedux = useAppSelector(selectAll);
   const dispatch = useAppDispatch();
 
-  // const ClickOpenConfirm = () => {
-  //   setOpenConfirm(true);
+  // const ClickOpenEditConfirm = () => {
+  //   setOpenEditConfirm(true);
   // };
 
-  const CloseConfirm = () => {
-    setOpenConfirm(false);
+  const CloseEditConfirm = () => {
+    setOpenEditConfirm(false);
+  };
+
+  const CloseDeleteConfirm = () => {
+    setOpenDeleteConfirm(false);
   };
 
   useEffect(() => {
@@ -88,14 +100,13 @@ const Home: React.FC = () => {
     const itemRedux = TasksRedux.find(item => item.id === itemEdit.id);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     setTaskToEdit(itemRedux!);
-    setOpenConfirm(true);
-    dispatch(updateTask);
+    setOpenEditConfirm(true);
   };
 
-  const handleDeleteTask = (itemRemove: TaskType) => {
-    setOpenConfirm(true);
-    dispatch(removeTask(itemRemove.id));
-    setOpenConfirm(false);
+  const handleDeleteTask = (taskRemove: TaskType) => {
+    setOpenDeleteConfirm(true);
+    setTaskRemove(taskRemove);
+    dispatch(removeTask(taskRemove.id));
     setOpen(true);
     setShowAlert(false);
   };
@@ -186,14 +197,23 @@ const Home: React.FC = () => {
               margin: '1rem'
             }}
           >
-            <DeleteDialog
+            {/* <DeleteDialog
               title={'Tem certeza que quer excluir esse recado?'}
               cancelText="Cancelar"
               confirmText="Excluir"
+              itemDescription={taskRemove?.description}
+              openDeleteConfirm={openDelteConfirm}
+              actionCloseDeleteConfirm={CloseDelteConfirm}
+              actionDeleteTask={() => handleDeleteTask(taskRemove)}
+            /> */}
+            <EditDialog
+              title={'Tem certeza que quer editar esse recado?'}
+              cancelText="Cancelar"
+              confirmText="Editar"
               itemDescription={taskToEdit?.description}
-              openConfirm={openConfirm}
-              actionCloseConfirm={CloseConfirm}
-              actionDeleteTask={() => handleEditTask(taskToEdit)}
+              openEditConfirm={openEditConfirm}
+              actionCloseEditConfirm={CloseEditConfirm}
+              actionEditTask={() => handleEditTask(taskToEdit)}
             />
             {listTasks}
           </Grid>

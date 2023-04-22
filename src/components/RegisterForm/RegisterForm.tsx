@@ -49,6 +49,17 @@ export default function Registerform() {
           />
         </Grid>
         <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            name="confirmPassword"
+            label="Confirmar Senha"
+            type="confirmPassword"
+            id="confirmPassword"
+            autoComplete="new-password"
+          />
+        </Grid>
+        <Grid item xs={12}>
           <FormControlLabel
             control={<Checkbox value="allowExtraEmails" color="primary" />}
             label="Quero receber novidades, promoções e atualizações por e-mail."

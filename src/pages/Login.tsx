@@ -1,16 +1,14 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import TaskIcon from '@mui/icons-material/Task';
 import Typography from '@mui/material/Typography';
+import LoginForm from '../components/LoginForm/LoginForm';
+import Registerform from '../components/RegisterForm/RegisterForm';
 
 function Copyright(props: any) {
   return (
@@ -26,15 +24,6 @@ function Copyright(props: any) {
 }
 
 const Login: React.FC = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    });
-  };
-
   return (
     <React.Fragment>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -63,52 +52,16 @@ const Login: React.FC = () => {
               alignItems: 'center'
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
+            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+              <TaskIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Task-In
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="E-mail"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Senha"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Lembrar de mim" />
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Acessar
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Esqueceu a senha?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    Não tem uma conta? Cadastre-se
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
-            </Box>
+            <LoginForm />
+            <Registerform />
           </Box>
+          <Copyright sx={{ mt: 5 }} />
         </Grid>
       </Grid>
     </React.Fragment>

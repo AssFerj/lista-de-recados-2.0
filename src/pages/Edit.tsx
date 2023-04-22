@@ -10,10 +10,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 const Edit: React.FC = () => {
   const params = useParams();
   const [description, setDescription] = useState<string>('');
-
   const [open, setOpen] = React.useState(false);
   const [valid, setValid] = useState<boolean>(false);
-
   const TasksRedux = useAppSelector(state => selectById(state, params.id || ''));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -36,6 +34,7 @@ const Edit: React.FC = () => {
   const handleEditTask = () => {
     if (params.id) {
       dispatch(updateTask({ id: params.id, changes: { description } }));
+      setOpen(true);
       navigate('/');
     }
   };
@@ -43,8 +42,8 @@ const Edit: React.FC = () => {
   return (
     <React.Fragment>
       <AlertComponent
-        typeAlert="error"
-        message="Recado excluído com sucesso!"
+        typeAlert="warning"
+        message="Recado editado com sucesso!"
         actionShowAlert={open}
         actionShowAlertFc={() => {
           setOpen(false);
@@ -55,7 +54,7 @@ const Edit: React.FC = () => {
         container
         style={{
           height: '100vh',
-          backgroundImage: 'url(https://source.unsplash.com/random)',
+          backgroundImage: 'url(/images/bg.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',

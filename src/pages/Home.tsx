@@ -87,13 +87,13 @@ const Home: React.FC = () => {
   const handleDeleteTask = (taskRemove: TaskType) => {
     setOpenDeleteConfirm(true);
     setTaskRemove(taskRemove);
-    setOpen(true);
   };
 
   const deleteTask = (taskRemove: TaskType) => {
     dispatch(removeTask(taskRemove.id));
     setOpenDeleteConfirm(false);
     setShowAlert(false);
+    setOpen(true);
   };
 
   return (
@@ -122,7 +122,7 @@ const Home: React.FC = () => {
         container
         style={{
           height: '100vh',
-          backgroundImage: 'url(https://source.unsplash.com/random)',
+          backgroundImage: 'url(/images/bg.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',

@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Grid,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import AppBar from '../components/AppBar/AppBar';
 import TaskType from '../types/TaskType';
@@ -19,44 +7,20 @@ import AlertComponent from '../components/AlertComponent/AlertComponent';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { addTask, removeTask, selectAll, selectById, updateTask } from '../store/modules/tasksSlice';
-import EditDialog from '../components/Dialog/EditDialog';
+import { addTask, removeTask, selectAll } from '../store/modules/tasksSlice';
 import DeleteDialog from '../components/Dialog/DeleteDialog';
 import { useNavigate } from 'react-router-dom';
-
-// interface EditDialogProps {
-//   title: string;
-//   openEditConfirm: boolean;
-//   cancelText: string;
-//   confirmText: string;
-//   itemDescription: any;
-// }
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [description, setDescription] = useState<string>('');
-
   const [open, setOpen] = React.useState(false);
   const [showAlert, setShowAlert] = useState<boolean>(false);
-  // const [typeAlert, setTypeAlert] = useState<string>('add' | 'edit' | 'delete');
-
   const [valid, setValid] = useState<boolean>(false);
-
-  // const [openEditConfirm, setOpenEditConfirm] = React.useState(false);
   const [openDeleteConfirm, setOpenDeleteConfirm] = React.useState(false);
-
-  // const [taskToEdit, setTaskToEdit] = useState({} as TaskType);
   const [taskRemove, setTaskRemove] = useState({} as TaskType);
   const TasksRedux = useAppSelector(selectAll);
   const dispatch = useAppDispatch();
-
-  // const ClickOpenEditConfirm = () => {
-  //   setOpenEditConfirm(true);
-  // };
-
-  // const CloseEditConfirm = () => {
-  //   setOpenEditConfirm(false);
-  // };
 
   const CloseDeleteConfirm = () => {
     setOpenDeleteConfirm(false);
@@ -108,10 +72,6 @@ const Home: React.FC = () => {
     setDescription(e.currentTarget.value);
   };
 
-  // const handleTaskToEdit = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  //   setTaskToEdit(e.currentTarget.value);
-  // };
-
   const handleAddTask = () => {
     const newTask: TaskType = { id: generateId(), description: description };
     dispatch(addTask(newTask));
@@ -127,8 +87,12 @@ const Home: React.FC = () => {
   const handleDeleteTask = (taskRemove: TaskType) => {
     setOpenDeleteConfirm(true);
     setTaskRemove(taskRemove);
-    dispatch(removeTask(taskRemove.id));
     setOpen(true);
+  };
+
+  const deleteTask = (taskRemove: TaskType) => {
+    dispatch(removeTask(taskRemove.id));
+    setOpenDeleteConfirm(false);
     setShowAlert(false);
   };
 
@@ -218,28 +182,16 @@ const Home: React.FC = () => {
               margin: '1rem'
             }}
           >
-            {/* <DeleteDialog
+            <DeleteDialog
               title={'Tem certeza que quer excluir esse recado?'}
               cancelText="Cancelar"
               confirmText="Excluir"
               itemDescription={taskRemove?.description}
-              openDeleteConfirm={openDelteConfirm}
-              actionCloseDeleteConfirm={CloseDelteConfirm}
-              actionDeleteTask={() => handleDeleteTask(taskRemove)}
-            /> */}
+              openDeleteConfirm={openDeleteConfirm}
+              actionCloseDeleteConfirm={CloseDeleteConfirm}
+              actionDeleteTask={() => deleteTask(taskRemove)}
+            />
 
-            {/* <EditDialog
-              title={'Tem certeza que quer editar esse recado?'}
-              cancelText="Cancelar"
-              confirmText="Editar"
-              itemDescription={taskToEdit.description}
-              openEditConfirm={openEditConfirm}
-              actionCloseEditConfirm={CloseEditConfirm}
-              actionEditTask={() => handleEditTask(taskToEdit)}
-              setItemDescription={function (ev: React.ChangeEvent<HTMLInputElement>): void {
-                throw new Error('Function not implemented.');
-              }} // setItemDescription={e => handleTaskToEdit(e)}
-            /> */}
             {listTasks}
           </Grid>
         </Container>

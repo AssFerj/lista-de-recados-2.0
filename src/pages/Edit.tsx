@@ -8,6 +8,7 @@ import { selectById, updateTask } from '../store/modules/tasksSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Edit: React.FC = () => {
+  const params = useParams();
   const [description, setDescription] = useState<string>('');
 
   const [open, setOpen] = React.useState(false);
@@ -16,8 +17,6 @@ const Edit: React.FC = () => {
   const TasksRedux = useAppSelector(state => selectById(state, params.id || ''));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const params = useParams();
 
   useEffect(() => {
     description.length >= 3 ? setValid(true) : setValid(false);
@@ -35,8 +34,6 @@ const Edit: React.FC = () => {
   };
 
   const handleEditTask = () => {
-    // const newTask: TaskType = { description };
-
     if (params.id) {
       dispatch(updateTask({ id: params.id, changes: { description } }));
       navigate('/');

@@ -23,7 +23,7 @@ function Copyright(props: any) {
   );
 }
 
-const Login: React.FC = () => {
+const Acess: React.FC = () => {
   return (
     <React.Fragment>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -68,4 +68,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Acess;

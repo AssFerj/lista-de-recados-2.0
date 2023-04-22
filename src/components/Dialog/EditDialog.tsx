@@ -1,13 +1,4 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  Typography,
-  DialogActions,
-  Button,
-  TextField
-} from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField } from '@mui/material';
 import React from 'react';
 
 interface EditDialogProps {
@@ -16,6 +7,7 @@ interface EditDialogProps {
   cancelText: string;
   confirmText: string;
   itemDescription: any;
+  setItemDescription: (ev: React.ChangeEvent<HTMLInputElement>) => void;
   actionCloseEditConfirm: () => void;
   actionEditTask: (item: any) => void;
 }
@@ -26,6 +18,7 @@ const EditDialog: React.FC<EditDialogProps> = ({
   cancelText,
   confirmText,
   itemDescription,
+  setItemDescription,
   actionCloseEditConfirm,
   actionEditTask
 }) => {
@@ -40,8 +33,7 @@ const EditDialog: React.FC<EditDialogProps> = ({
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <TextField fullWidth value={itemDescription} />
-            {/* <Typography variant="body1">{itemDescription}</Typography> */}
+            <TextField fullWidth value={itemDescription} onChange={setItemDescription} />
           </DialogContentText>
         </DialogContent>
         <DialogActions>

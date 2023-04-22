@@ -1,13 +1,18 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Register from '../pages/Register';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
+import Edit from '../pages/Edit';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />
+  },
+  {
+    path: '/editar/:id',
+    element: <Edit />
   },
   {
     path: '/login',

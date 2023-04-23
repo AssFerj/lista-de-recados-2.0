@@ -1,11 +1,11 @@
-import { Button, Container, Grid, TextField, Typography } from '@mui/material';
+import { Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import AppBar from '../components/AppBar/AppBar';
-import TaskType from '../types/TaskType';
 import AlertComponent from '../components/AlertComponent/AlertComponent';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectById, updateTask } from '../store/modules/tasksSlice';
 import { useNavigate, useParams } from 'react-router-dom';
+import Copyright from '../components/Copyright/Copyright';
 
 const Edit: React.FC = () => {
   const params = useParams();
@@ -105,6 +105,7 @@ const Edit: React.FC = () => {
           </Grid>
         </Container>
       </Grid>
+      <Copyright />
     </React.Fragment>
   );
 };

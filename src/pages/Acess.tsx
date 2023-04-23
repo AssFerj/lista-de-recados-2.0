@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -9,21 +8,19 @@ import TaskIcon from '@mui/icons-material/Task';
 import Typography from '@mui/material/Typography';
 import LoginForm from '../components/LoginForm/LoginForm';
 import Registerform from '../components/RegisterForm/RegisterForm';
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://assisjuniorwm.com.br/">
-        Assis Junior
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../components/Copyright/Copyright';
+import { useAppSelector } from '../store/hooks';
+import { selectAll } from '../store/modules/tasksSlice';
+import { useEffect } from 'react';
 
 const Acess: React.FC = () => {
+  const UserRedux = useAppSelector(selectAll);
+
+  const showForm = useEffect(() => {
+    !UserRedux.length ? <Registerform /> : <LoginForm />;
+    console.log(UserRedux);
+  }, [UserRedux]);
+
   return (
     <React.Fragment>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -58,10 +55,12 @@ const Acess: React.FC = () => {
             <Typography component="h1" variant="h5">
               Task-In
             </Typography>
-            <LoginForm />
-            <Registerform />
+            {/* Login and Register From */}
+            {/* <LoginForm /> */}
+            {/* <Registerform /> */}
+            {showForm}
           </Box>
-          <Copyright sx={{ mt: 5 }} />
+          <Copyright />
         </Grid>
       </Grid>
     </React.Fragment>

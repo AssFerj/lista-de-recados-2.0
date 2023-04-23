@@ -13,10 +13,9 @@ const usersSlice = createSlice({
   initialState: adapter.getInitialState(),
   reducers: {
     addUser: adapter.addOne,
-    updateUser: adapter.updateOne,
-    removeUser: adapter.removeOne
+    updateUser: adapter.updateOne
   }
 });
 
-export const { addUser, updateUser, removeUser } = usersSlice.actions;
+export const { addUser, updateUser } = usersSlice.actions;
 export default usersSlice.reducer;

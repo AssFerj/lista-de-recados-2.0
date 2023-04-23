@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import AppBar from '../components/AppBar/AppBar';
 import TaskType from '../types/TaskType';
@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { addTask, removeTask, selectAll } from '../store/modules/tasksSlice';
 import DeleteDialog from '../components/Dialog/DeleteDialog';
 import { useNavigate } from 'react-router-dom';
+import Copyright from '../components/Copyright/Copyright';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -196,6 +197,7 @@ const Home: React.FC = () => {
           </Grid>
         </Container>
       </Grid>
+      <Copyright />
     </React.Fragment>
   );
 };

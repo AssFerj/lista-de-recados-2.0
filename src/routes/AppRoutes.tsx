@@ -6,7 +6,7 @@ import Acess from '../pages/Acess';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/home',
     element: <Home />
   },
   {
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     element: <Edit />
   },
   {
-    path: '/login',
+    path: '/',
     element: <Acess />
   }
 ]);

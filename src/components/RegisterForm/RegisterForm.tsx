@@ -17,9 +17,11 @@ export default function Registerform() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    user.firstName.length >= 3 || user.lastName.length >= 3 || user.email.length >= 3 || user.password.length >= 3
-      ? setValid(true)
-      : setValid(false);
+    if (user) {
+      user.firstName.length >= 3 || user.lastName.length >= 3 || user.email.length >= 3 || user.password.length >= 3
+        ? setValid(true)
+        : setValid(false);
+    }
   }, [user]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

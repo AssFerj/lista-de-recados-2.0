@@ -17,15 +17,17 @@ export default function Registerform() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // if (user) {
-    user.firstName === '' ||
-    user.lastName === '' ||
-    user.email === '' ||
-    user.password === '' ||
-    user.consfirmPassword === ''
-      ? setValid(true)
-      : setValid(false);
-    // }
+    console.log(user);
+    if (user) {
+      user.firstName === '' ||
+      user.lastName === '' ||
+      user.email === '' ||
+      user.password === '' ||
+      user.consfirmPassword === ''
+        ? // user.firstName.length <= 4 || user.lastName.length <= 4 || user.email.length <= 4 || user.password.length <= 4
+          setValid(false)
+        : setValid(true);
+    }
   }, [user]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

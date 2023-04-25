@@ -5,7 +5,7 @@ type UserType = {
   lastName: string;
   email: string;
   password: string;
-  consfirmPassword?: string;
+  consfirmPassword: string;
   tasks?: TaskType[];
 };
 

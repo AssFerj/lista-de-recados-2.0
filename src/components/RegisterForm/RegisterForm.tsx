@@ -17,11 +17,15 @@ export default function Registerform() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user) {
-      user.firstName.length >= 3 || user.lastName.length >= 3 || user.email.length >= 3 || user.password.length >= 3
-        ? setValid(true)
-        : setValid(false);
-    }
+    // if (user) {
+    user.firstName === '' ||
+    user.lastName === '' ||
+    user.email === '' ||
+    user.password === '' ||
+    user.consfirmPassword === ''
+      ? setValid(true)
+      : setValid(false);
+    // }
   }, [user]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,10 +47,11 @@ export default function Registerform() {
         <Grid item xs={12} sm={6}>
           <TextField
             autoComplete="given-name"
-            name="firstName"
             required
             fullWidth
+            type="text"
             id="firstName"
+            name="firstName"
             label="Nome"
             autoFocus
             value={user.firstName}
@@ -58,6 +63,7 @@ export default function Registerform() {
             required
             fullWidth
             id="lastName"
+            type="text"
             label="Sobrenome"
             name="lastName"
             autoComplete="family-name"
@@ -70,6 +76,7 @@ export default function Registerform() {
             required
             fullWidth
             id="email"
+            type="email"
             label="Email"
             name="email"
             autoComplete="email"
@@ -96,9 +103,9 @@ export default function Registerform() {
             fullWidth
             name="confirmPassword"
             label="Confirmar Senha"
-            type="confirmPassword"
+            type="password"
             id="confirmPassword"
-            autoComplete="confirm-password"
+            autoComplete="new-password"
             value={user.consfirmPassword}
             onChange={handleChange}
           />

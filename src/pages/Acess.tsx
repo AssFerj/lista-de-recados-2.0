@@ -18,8 +18,8 @@ const Acess: React.FC = () => {
   const [haveUser, setHaveUser] = useState<boolean>(false);
 
   useEffect(() => {
-    UserRedux.length ? setHaveUser(true) : setHaveUser(false);
-  }, [UserRedux]);
+    !UserRedux ? setHaveUser(true) : setHaveUser(false);
+  }, []);
 
   return (
     <React.Fragment>

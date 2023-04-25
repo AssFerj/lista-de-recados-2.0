@@ -11,14 +11,14 @@ import Registerform from '../components/RegisterForm/RegisterForm';
 import Copyright from '../components/Copyright/Copyright';
 import { useAppSelector } from '../store/hooks';
 import { selectAll } from '../store/modules/tasksSlice';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 const Acess: React.FC = () => {
   const UserRedux = useAppSelector(selectAll);
-  const [haveUser, setHaveUser] = useState<boolean>(false);
 
-  useEffect(() => {
-    UserRedux.length ? setHaveUser(true) : setHaveUser(false);
+  const showForm = useEffect(() => {
+    !UserRedux.length ? <Registerform /> : <LoginForm />;
+    console.log(UserRedux);
   }, [UserRedux]);
 
   return (
@@ -55,7 +55,10 @@ const Acess: React.FC = () => {
             <Typography component="h1" variant="h5">
               Task-In
             </Typography>
-            {haveUser === true ? <LoginForm /> : <Registerform />}
+            {/* Login and Register From */}
+            {/* <LoginForm /> */}
+            {/* <Registerform /> */}
+            {showForm}
           </Box>
           <Copyright />
         </Grid>

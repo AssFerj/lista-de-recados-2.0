@@ -18,7 +18,7 @@ const Acess: React.FC = () => {
   const [haveUser, setHaveUser] = useState<boolean>(false);
 
   useEffect(() => {
-    !UserRedux ? setHaveUser(true) : setHaveUser(false);
+    UserRedux ? setHaveUser(true) : setHaveUser(false);
     console.log(UserRedux);
   }, [UserRedux]);
 

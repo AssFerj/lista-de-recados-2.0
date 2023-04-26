@@ -14,19 +14,24 @@ import { addUser } from '../../store/modules/usersSlice';
 export default function Registerform() {
   const [user, setUser] = useState<UserType>({} as UserType);
   const [valid, setValid] = useState<boolean>(false);
+  const [errorPassword, setErrorPassword] = useState<string>('');
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(user);
-    if (user) {
-      user.firstName === '' ||
-      user.lastName === '' ||
-      user.email === '' ||
-      user.password === '' ||
-      user.consfirmPassword === ''
-        ? // user.firstName.length <= 4 || user.lastName.length <= 4 || user.email.length <= 4 || user.password.length <= 4
-          setValid(false)
-        : setValid(true);
+    user.firstName === '' ||
+    user.lastName === '' ||
+    user.email === '' ||
+    user.password === '' ||
+    user.confirmPassword === ''
+      ? setValid(false)
+      : setValid(true);
+  }, [user]);
+
+  useEffect(() => {
+    if (user.password && user.confirmPassword && user.password !== user.confirmPassword) {
+      setErrorPassword('Senhas não conferem!');
+    } else {
+      setErrorPassword('');
     }
   }, [user]);
 
@@ -36,11 +41,11 @@ export default function Registerform() {
 
   const handleSubmit = () => {
     dispatch(addUser(user));
-    handleClear(user);
+    handleClear();
   };
 
-  const handleClear = (user: UserType) => {
-    setUser({ firstName: '', lastName: '', email: '', password: '', consfirmPassword: '' });
+  const handleClear = () => {
+    setUser({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' });
   };
 
   return (
@@ -86,7 +91,7 @@ export default function Registerform() {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             fullWidth
@@ -99,7 +104,7 @@ export default function Registerform() {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             fullWidth
@@ -107,17 +112,19 @@ export default function Registerform() {
             label="Confirmar Senha"
             type="password"
             id="confirmPassword"
+            error={errorPassword.length > 1}
+            helperText={errorPassword}
             autoComplete="new-password"
-            value={user.consfirmPassword}
+            value={user.confirmPassword}
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <FormControlLabel
             control={<Checkbox value="allowExtraEmails" color="primary" />}
             label="Quero receber novidades, promoções e atualizações por e-mail."
           />
-        </Grid>
+        </Grid> */}
       </Grid>
       <Button
         type="button"

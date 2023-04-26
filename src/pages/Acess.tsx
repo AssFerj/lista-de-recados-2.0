@@ -19,12 +19,12 @@ const Acess: React.FC = () => {
 
   useEffect(() => {
     !UserRedux ? setHaveUser(true) : setHaveUser(false);
-  }, []);
+    console.log(UserRedux);
+  }, [UserRedux]);
 
   return (
     <React.Fragment>
       <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
         <Grid
           item
           xs={false}

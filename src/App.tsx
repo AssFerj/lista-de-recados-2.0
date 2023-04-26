@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { themeLight } from './configs/Theme/Theme';
 import AppRoutes from './routes/AppRoutes';
 import { Provider } from 'react-redux';
@@ -14,6 +14,7 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <CssBaseline />
         <ThemeProvider theme={themeLight}>
           <AppRoutes />
         </ThemeProvider>

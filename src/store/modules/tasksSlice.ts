@@ -6,7 +6,7 @@ const adapter = createEntityAdapter<TaskType>({
   selectId: item => item.id
 });
 
-export const { selectAll, selectById } = adapter.getSelectors((state: RootState) => state.tasks);
+export const { selectAll, selectById } = adapter.getSelectors((state: RootState) => state.tasksReducer);
 
 const tasksSlice = createSlice({
   name: 'tasks',

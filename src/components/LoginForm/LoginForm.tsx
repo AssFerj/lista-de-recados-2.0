@@ -6,6 +6,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { useState } from 'react';
+import Registerform from '../RegisterForm/RegisterForm';
 
 export default function LoginForm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -25,7 +27,7 @@ export default function LoginForm() {
           required
           fullWidth
           id="email"
-          label="Email Address"
+          label="Email"
           name="email"
           autoComplete="email"
           autoFocus
@@ -35,7 +37,7 @@ export default function LoginForm() {
           required
           fullWidth
           name="password"
-          label="Password"
+          label="Senha"
           type="password"
           id="password"
           autoComplete="current-password"

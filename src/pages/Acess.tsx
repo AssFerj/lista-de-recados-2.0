@@ -10,7 +10,7 @@ import LoginForm from '../components/LoginForm/LoginForm';
 import Registerform from '../components/RegisterForm/RegisterForm';
 import Copyright from '../components/Copyright/Copyright';
 import { useAppSelector } from '../store/hooks';
-import { selectAll } from '../store/modules/tasksSlice';
+import { selectAll } from '../store/modules/usersSlice';
 import { useState, useEffect } from 'react';
 
 const Acess: React.FC = () => {
@@ -18,7 +18,7 @@ const Acess: React.FC = () => {
   const [haveUser, setHaveUser] = useState<boolean>(false);
 
   useEffect(() => {
-    UserRedux ? setHaveUser(true) : setHaveUser(false);
+    UserRedux.length ? setHaveUser(true) : setHaveUser(false);
     console.log(UserRedux);
   }, [UserRedux]);
 

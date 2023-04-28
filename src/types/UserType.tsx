@@ -6,7 +6,7 @@ type UserType = {
   email: string;
   password: string;
   confirmPassword: string;
-  tasks?: TaskType[];
+  tasks: TaskType[];
 };
 
 export default UserType;

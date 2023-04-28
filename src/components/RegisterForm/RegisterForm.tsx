@@ -45,7 +45,7 @@ export default function Registerform() {
   };
 
   const handleClear = () => {
-    setUser({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' });
+    setUser({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', tasks: [] });
   };
 
   return (

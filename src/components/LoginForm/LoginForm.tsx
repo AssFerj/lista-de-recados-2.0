@@ -6,22 +6,37 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
-import Registerform from '../RegisterForm/RegisterForm';
+import { useEffect, useState } from 'react';
+import LogedUserType from '../../types/LogedUserType';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectAll } from '../../store/modules/usersSlice';
 
 export default function LoginForm() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    });
+  const [user, setUser] = useState<LogedUserType>({} as LogedUserType);
+
+  const dispatch = useAppDispatch();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, [event.target.name]: event.target.value });
   };
 
+  useEffect(() => {
+    handleClear();
+  }, []);
+
+  const handleClear = () => {
+    setUser({ email: '', password: '' });
+  };
+
+  const handleAddLogedUser = (log: LogedUserType) => {
+    const UsersRedux = useAppSelector(selectAll);
+    const index = UsersRedux.find(item => item.email === user.email);
+    // const newLogedUser = {}
+    // dispatch(index, );
+  };
   return (
     <>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      <Box component="form" noValidate sx={{ mt: 1 }}>
         <TextField
           margin="normal"
           required
@@ -29,7 +44,9 @@ export default function LoginForm() {
           id="email"
           label="Email"
           name="email"
+          value={user.email}
           autoComplete="email"
+          onChange={handleChange}
           autoFocus
         />
         <TextField
@@ -40,10 +57,12 @@ export default function LoginForm() {
           label="Senha"
           type="password"
           id="password"
+          value={user.password}
           autoComplete="current-password"
+          onChange={handleChange}
         />
         <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Lembrar acesso" />
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+        <Button type="button" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
           Entrar
         </Button>
         <Grid container>
@@ -54,7 +73,7 @@ export default function LoginForm() {
           </Grid>
           <Grid item>
             Não tem uma conta?{' '}
-            <Link href="#" variant="body2">
+            <Link href="/cadastro" variant="body2">
               Cadastre-se
             </Link>
           </Grid>

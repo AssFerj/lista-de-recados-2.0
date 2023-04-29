@@ -1,27 +1,10 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import { Grid, Paper, Box, Avatar, Typography } from '@mui/material';
+import React from 'react';
 import TaskIcon from '@mui/icons-material/Task';
-import Typography from '@mui/material/Typography';
-import LoginForm from '../components/LoginForm/LoginForm';
-import Registerform from '../components/RegisterForm/RegisterForm';
 import Copyright from '../components/Copyright/Copyright';
-import { useAppSelector } from '../store/hooks';
-import { selectAll } from '../store/modules/usersSlice';
-import { useState, useEffect } from 'react';
+import LoginForm from '../components/LoginForm/LoginForm';
 
-const Acess: React.FC = () => {
-  const UserRedux = useAppSelector(selectAll);
-  const [haveUser, setHaveUser] = useState<boolean>(false);
-
-  useEffect(() => {
-    UserRedux.length ? setHaveUser(true) : setHaveUser(false);
-    console.log(UserRedux);
-  }, [UserRedux]);
-
+const Login: React.FC = () => {
   return (
     <React.Fragment>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -55,7 +38,7 @@ const Acess: React.FC = () => {
             <Typography component="h1" variant="h5">
               Task-In
             </Typography>
-            {haveUser === true ? <LoginForm /> : <Registerform />}
+            <LoginForm />
           </Box>
           <Copyright />
         </Grid>
@@ -64,4 +47,4 @@ const Acess: React.FC = () => {
   );
 };
 
-export default Acess;
+export default Login;

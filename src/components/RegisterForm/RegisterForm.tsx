@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -10,11 +8,13 @@ import { useEffect, useState } from 'react';
 import UserType from '../../types/UserType';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../store/modules/usersSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function Registerform() {
   const [user, setUser] = useState<UserType>({} as UserType);
   const [valid, setValid] = useState<boolean>(false);
   const [errorPassword, setErrorPassword] = useState<string>('');
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,6 +29,7 @@ export default function Registerform() {
 
   useEffect(() => {
     if (user.password && user.confirmPassword && user.password !== user.confirmPassword) {
+      setValid(false);
       setErrorPassword('Senhas não conferem!');
     } else {
       setErrorPassword('');
@@ -42,6 +43,7 @@ export default function Registerform() {
   const handleSubmit = () => {
     dispatch(addUser(user));
     handleClear();
+    navigate('/');
   };
 
   const handleClear = () => {
@@ -119,12 +121,6 @@ export default function Registerform() {
             onChange={handleChange}
           />
         </Grid>
-        {/* <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox value="allowExtraEmails" color="primary" />}
-            label="Quero receber novidades, promoções e atualizações por e-mail."
-          />
-        </Grid> */}
       </Grid>
       <Button
         type="button"
@@ -139,7 +135,7 @@ export default function Registerform() {
       <Grid container justifyContent="flex-end">
         <Grid item>
           Já tem uma conta?{' '}
-          <Link href="/login" variant="body2">
+          <Link href="/" variant="body2">
             Acesse
           </Link>
         </Grid>

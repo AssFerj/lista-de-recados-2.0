@@ -13,7 +13,7 @@ import { selectAll } from '../../store/modules/usersSlice';
 
 export default function LoginForm() {
   const [user, setUser] = useState<LogedUserType>({} as LogedUserType);
-
+  const UsersRedux = useAppSelector(selectAll);
   const dispatch = useAppDispatch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,10 +29,10 @@ export default function LoginForm() {
   };
 
   const handleAddLogedUser = (log: LogedUserType) => {
-    const UsersRedux = useAppSelector(selectAll);
     const index = UsersRedux.find(item => item.email === user.email);
     // const newLogedUser = {}
-    // dispatch(index, );
+    // setUser({ email: index?.email, password: index?.password });
+    // dispatch();
   };
   return (
     <>

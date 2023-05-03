@@ -9,15 +9,35 @@ import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
 import LogedUserType from '../../types/LogedUserType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectAll } from '../../store/modules/usersSlice';
+import { selectAll, selectByEmail } from '../../store/modules/usersSlice';
+import { logedUser } from '../../store/modules/userSlice';
+import { useNavigate } from 'react-router-dom';
+import AlertComponent from '../AlertComponent/AlertComponent';
 
 export default function LoginForm() {
-  const [user, setUser] = useState<LogedUserType>({} as LogedUserType);
+  // const [user, setUser] = useState<LogedUserType>({} as LogedUserType);
+  const [logedEmail, setLogedEmail] = useState<string>('');
+  const [logedPassword, setLogedPassword] = useState<string>('');
+  const [logedChecked, setLogedChecked] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const UsersRedux = useAppSelector(selectAll);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [event.target.name]: event.target.value });
+    // setUser({ ...user, [event.target.name]: event.target.value || event.target.checked });
+  };
+
+  const handleUserEmail = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setLogedEmail(e.target.value);
+  };
+
+  const handleUserPassword = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setLogedPassword(e.target.value);
+  };
+
+  const handleUserRemember = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLogedChecked(e.target.checked);
   };
 
   useEffect(() => {
@@ -25,14 +45,29 @@ export default function LoginForm() {
   }, []);
 
   const handleClear = () => {
-    setUser({ email: '', password: '' });
+    setLogedEmail('');
+    setLogedPassword('');
   };
 
+  const user = useAppSelector(state => selectByEmail(state, logedEmail));
+
   const handleAddLogedUser = (log: LogedUserType) => {
-    const index = UsersRedux.find(item => item.email === user.email);
-    // const newLogedUser = {}
-    // setUser({ email: index?.email, password: index?.password });
-    // dispatch();
+    if (user && user.password === log.password) {
+      dispatch(logedUser(user));
+      navigate('/home');
+    } else {
+      setOpen(true);
+      return (
+        <AlertComponent
+          typeAlert="error"
+          message="Usuário não cadastrado!"
+          actionShowAlert={open}
+          actionShowAlertFc={() => {
+            setOpen(false);
+          }}
+        />
+      );
+    }
   };
   return (
     <>
@@ -44,9 +79,9 @@ export default function LoginForm() {
           id="email"
           label="Email"
           name="email"
-          value={user.email}
+          value={logedEmail}
           autoComplete="email"
-          onChange={handleChange}
+          onChange={handleUserEmail}
           autoFocus
         />
         <TextField
@@ -57,12 +92,23 @@ export default function LoginForm() {
           label="Senha"
           type="password"
           id="password"
-          value={user.password}
+          value={logedPassword}
           autoComplete="current-password"
-          onChange={handleChange}
+          onChange={handleUserPassword}
         />
-        <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Lembrar acesso" />
-        <Button type="button" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+        <FormControlLabel
+          control={<Checkbox checked={logedChecked} color="primary" onChange={handleUserRemember} />}
+          label="Lembrar acesso"
+        />
+        <Button
+          type="button"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          onClick={() =>
+            handleAddLogedUser({ email: logedEmail, password: logedPassword, remember: logedChecked, tasks: [] })
+          }
+        >
           Entrar
         </Button>
         <Grid container>

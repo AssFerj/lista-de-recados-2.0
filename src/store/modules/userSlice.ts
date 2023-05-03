@@ -4,18 +4,19 @@ import LogedUserType from '../../types/LogedUserType';
 const initialState: LogedUserType = {
   email: '',
   password: '',
-  remenber: false
+  remember: false,
+  tasks: []
 };
 
 const userSlice = createSlice({
   name: 'logedUser',
   initialState,
   reducers: {
-    addLogedUser(state, action: PayloadAction<LogedUserType>) {
-      state = action.payload;
+    logedUser(_, action: PayloadAction<LogedUserType>) {
+      return action.payload;
     }
   }
 });
 
-export const { addLogedUser } = userSlice.actions;
+export const { logedUser } = userSlice.actions;
 export default userSlice.reducer;

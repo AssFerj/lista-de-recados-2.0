@@ -11,6 +11,7 @@ import { addTask, removeTask, selectAll } from '../store/modules/tasksSlice';
 import DeleteDialog from '../components/Dialog/DeleteDialog';
 import { useNavigate } from 'react-router-dom';
 import Copyright from '../components/Copyright/Copyright';
+import { selectByEmail } from '../store/modules/usersSlice';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const Home: React.FC = () => {
   const [openDeleteConfirm, setOpenDeleteConfirm] = React.useState(false);
   const [taskRemove, setTaskRemove] = useState({} as TaskType);
   const TasksRedux = useAppSelector(selectAll);
+  const [tasksOfLogedUser, setTasksOfLogedUser] = useState<TaskType>({} as TaskType);
+  const logedUser = useAppSelector(state => state.userReducer);
   const dispatch = useAppDispatch();
 
   const CloseDeleteConfirm = () => {
@@ -28,8 +31,22 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
+    if (!logedUser) {
+      navigate('/');
+    }
+  }, [logedUser]);
+
+  useEffect(() => {
     description.length >= 3 ? setValid(true) : setValid(false);
   }, [description]);
+
+  useEffect(() => {
+    if (logedUser) {
+      const taskToList = logedUser.tasks.filter(task => task.userId === logedUser.email);
+      console.log(taskToList);
+      // setTasksOfLogedUser(taskToList);
+    }
+  }, [tasksOfLogedUser]);
 
   const listTasks = useMemo(() => {
     return TasksRedux?.map(item => {
@@ -74,7 +91,8 @@ const Home: React.FC = () => {
   };
 
   const handleAddTask = () => {
-    const newTask: TaskType = { id: generateId(), description: description };
+    const newTask: TaskType = { id: generateId(), description: description, userId: logedUser.email };
+
     dispatch(addTask(newTask));
     setDescription('');
     setOpen(true);
@@ -192,8 +210,14 @@ const Home: React.FC = () => {
               actionCloseDeleteConfirm={CloseDeleteConfirm}
               actionDeleteTask={() => deleteTask(taskRemove)}
             />
-
-            {listTasks}
+            {TasksRedux.length ? (
+              listTasks
+            ) : (
+              <Typography variant="body1" sx={{ padding: '.5rem', background: '#ffffff', borderRadius: '8px' }}>
+                Ainda não há recados cadastrados!
+              </Typography>
+            )}
+            {/* {listTasks} */}
           </Grid>
         </Container>
       </Grid>

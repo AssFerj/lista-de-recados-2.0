@@ -1,7 +1,10 @@
+import TaskType from './TaskType';
+
 type LogedUserType = {
   email: string;
   password: string;
-  remenber?: boolean;
+  remember?: boolean;
+  tasks: TaskType[];
 };
 
 export default LogedUserType;

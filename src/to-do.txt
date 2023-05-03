@@ -1,0 +1,7 @@
+Quando logar buscar as taks do usuario logado
+buscar a task pelo filter
+salvar em um estado local
+exibir na tela o estado
+quando adicionar uma nova task atualizar as tasks do estado local
+criar um useeffect para escutar as tasks do estado local
+// remover tasks do usertype e do register form

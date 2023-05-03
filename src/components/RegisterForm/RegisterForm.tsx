@@ -41,7 +41,7 @@ export default function Registerform() {
   };
 
   const handleSubmit = () => {
-    dispatch(addUser(user));
+    dispatch(addUser({ ...user }));
     handleClear();
     navigate('/');
   };

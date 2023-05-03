@@ -6,7 +6,7 @@ const adapter = createEntityAdapter<UserType>({
   selectId: item => item.email
 });
 
-export const { selectAll, selectById } = adapter.getSelectors((state: RootState) => state.usersReducer);
+export const { selectAll, selectById: selectByEmail } = adapter.getSelectors((state: RootState) => state.usersReducer);
 
 const usersSlice = createSlice({
   name: 'users',

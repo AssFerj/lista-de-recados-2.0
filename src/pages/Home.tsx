@@ -10,7 +10,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import { addTask, removeTask, selectAll } from '../store/modules/tasksSlice';
 import DeleteDialog from '../components/Dialog/DeleteDialog';
 import { useNavigate } from 'react-router-dom';
-import Copyright from '../components/Copyright/Copyright';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -29,18 +28,20 @@ const Home: React.FC = () => {
   };
 
   // validação para acesso a home
-  // useEffect(() => {
-  //   if (!logedUser) {
-  //     navigate('/');
-  //   }
-  // }, [logedUser]);
+  useEffect(() => {
+    if (logedUser.remember === false || !logedUser) {
+      navigate('/');
+    }
+  }, [logedUser]);
 
   useEffect(() => {
     description.length >= 3 ? setValid(true) : setValid(false);
   }, [description]);
 
   const listTasks = useMemo(() => {
-    return TasksRedux?.map(item => {
+    const tasksToList = TasksRedux.filter(item => item.userId === logedUser.email);
+
+    return tasksToList?.map(item => {
       return (
         <Box
           key={item.id}
@@ -77,57 +78,22 @@ const Home: React.FC = () => {
     });
   }, [TasksRedux]);
 
-  // const listTasksOfLogedUser = useMemo(() => {
-  //   return logedUser.tasks?.map(item => {
-  //     return (
-  //       <Box
-  //         key={item.id}
-  //         style={{
-  //           width: '30em',
-  //           display: 'flex',
-  //           justifyContent: 'center',
-  //           alignItems: 'center',
-  //           backgroundColor: '#fff',
-  //           padding: '.5rem',
-  //           marginBottom: '1rem',
-  //           borderRadius: '.5rem'
-  //         }}
-  //       >
-  //         <Box
-  //           style={{
-  //             display: 'flex',
-  //             justifyContent: 'center',
-  //             alignItems: 'center'
-  //           }}
-  //         >
-  //           <Typography variant="body1" padding={'.5rem 1rem'}>
-  //             {item.description}
-  //           </Typography>
-  //           <Button onClick={() => handleEditTask(item)}>
-  //             <EditIcon />
-  //           </Button>
-  //           <Button onClick={() => handleDeleteTask(item)}>
-  //             <DeleteIcon />
-  //           </Button>
-  //         </Box>
-  //       </Box>
-  //     );
-  //   });
-  // }, [logedUser]);
-
   const handleSetDescription = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setDescription(e.currentTarget.value);
   };
 
   const handleAddTask = () => {
+    const existTask = TasksRedux.find(item => item.description === description);
     const newTask: TaskType = { id: generateId(), description: description, userId: logedUser.email };
-    console.log(newTask);
-    console.log(TasksRedux);
 
-    dispatch(addTask(newTask));
-    setDescription('');
-    setOpen(true);
-    setShowAlert(true);
+    if (existTask) {
+      return alert('Recado já cadastrado!');
+    } else {
+      dispatch(addTask(newTask));
+      setDescription('');
+      setOpen(true);
+      setShowAlert(true);
+    }
   };
 
   const handleEditTask = (itemEdit: TaskType) => {
@@ -248,18 +214,9 @@ const Home: React.FC = () => {
                 Ainda não há recados cadastrados!
               </Typography>
             )}
-            {/* {logedUser.tasks.length ? (
-              listTasksOfLogedUser
-            ) : (
-              <Typography variant="body1" sx={{ padding: '.5rem', background: '#ffffff', borderRadius: '8px' }}>
-                Ainda não há recados cadastrados!
-              </Typography>
-            )} */}
-            {/* {listTasks} */}
           </Grid>
         </Container>
       </Grid>
-      <Copyright />
     </React.Fragment>
   );
 };

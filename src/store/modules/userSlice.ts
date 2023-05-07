@@ -4,8 +4,7 @@ import LogedUserType from '../../types/LogedUserType';
 const initialState: LogedUserType = {
   email: '',
   password: '',
-  remember: false,
-  tasks: []
+  remember: false
 };
 
 const userSlice = createSlice({

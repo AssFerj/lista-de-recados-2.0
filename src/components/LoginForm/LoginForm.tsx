@@ -9,13 +9,12 @@ import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
 import LogedUserType from '../../types/LogedUserType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectAll, selectByEmail } from '../../store/modules/usersSlice';
+import { selectAll } from '../../store/modules/usersSlice';
 import { logedUser } from '../../store/modules/userSlice';
 import { useNavigate } from 'react-router-dom';
 import AlertComponent from '../AlertComponent/AlertComponent';
 
 export default function LoginForm() {
-  // const [user, setUser] = useState<LogedUserType>({} as LogedUserType);
   const [logedEmail, setLogedEmail] = useState<string>('');
   const [logedPassword, setLogedPassword] = useState<string>('');
   const [logedChecked, setLogedChecked] = useState<boolean>(false);
@@ -25,10 +24,6 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const findUser = UsersRedux.find(item => item.email === logedEmail && item.password === logedPassword);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setUser({ ...user, [event.target.name]: event.target.value || event.target.checked });
-  };
 
   const handleUserEmail = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setLogedEmail(e.target.value);
@@ -51,24 +46,7 @@ export default function LoginForm() {
     setLogedPassword('');
   };
 
-  const user = useAppSelector(state => selectByEmail(state, logedEmail));
-
   const handleAddLogedUser = (log: LogedUserType) => {
-    // if (user && user.password === log.password) {
-    //   dispatch(logedUser(user));
-    //   navigate('/home');
-    // } else {
-    //   setOpen(true);
-    // }
-
-    // const userToLog: LogedUserType = {
-    //   userId: findUser?.email,
-    //   email: logedEmail,
-    //   password: logedPassword,
-    //   remember: logedChecked,
-    //   tasks: []
-    // };
-
     if (findUser) {
       dispatch(logedUser(log));
       navigate('/home');
@@ -112,7 +90,7 @@ export default function LoginForm() {
           onChange={handleUserPassword}
         />
         <FormControlLabel
-          control={<Checkbox checked={logedChecked} color="primary" onChange={handleUserRemember} />}
+          control={<Checkbox checked={logedChecked} color="primary" onChange={handleUserRemember} required />}
           label="Lembrar acesso"
         />
         <Button
@@ -122,21 +100,17 @@ export default function LoginForm() {
           sx={{ mt: 3, mb: 2 }}
           onClick={() =>
             handleAddLogedUser({
+              firstName: findUser?.firstName,
+              lastName: findUser?.lastName,
               email: logedEmail,
               password: logedPassword,
-              remember: logedChecked,
-              tasks: []
+              remember: logedChecked
             })
           }
         >
           Entrar
         </Button>
         <Grid container>
-          <Grid item xs>
-            <Link href="#" variant="body2">
-              Esqueceu a senha?
-            </Link>
-          </Grid>
           <Grid item>
             Não tem uma conta?{' '}
             <Link href="/cadastro" variant="body2">

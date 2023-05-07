@@ -12,9 +12,9 @@ import React from 'react';
 interface DeleteDialogProps {
   title: string;
   openDeleteConfirm: boolean;
-  cancelText: string;
-  confirmText: string;
-  itemDescription: any;
+  cancelText?: string;
+  confirmText?: string;
+  itemDescription?: any;
   actionCloseDeleteConfirm: () => void;
   actionDeleteTask: (item: any) => void;
 }

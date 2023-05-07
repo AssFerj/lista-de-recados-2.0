@@ -5,40 +5,33 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import TaskIcon from '@mui/icons-material/Task';
-// import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
-// import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
-// import AccountCircle from '@mui/icons-material/AccountCircle';
-// import Switch from '@mui/material/Switch';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormGroup from '@mui/material/FormGroup';
-// import MenuItem from '@mui/material/MenuItem';
-// import Menu from '@mui/material/Menu';
+import { useAppSelector } from '../../store/hooks';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuAppBar() {
-  // const [auth, setAuth] = React.useState(true);
-  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const logedUser = useAppSelector(state => state.userReducer);
+  const navigate = useNavigate();
 
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setAuth(event.target.checked);
-  // };
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-  // const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
+  const handleClose = () => {
+    logedUser.firstName = '';
+    logedUser.lastName = '';
+    logedUser.email = '';
+    logedUser.password = '';
+    logedUser.remember = false;
+    navigate('/');
+  };
 
   return (
     <Box sx={{ flexGrow: 1, position: 'absolute', top: '1.5rem', zIndex: 1, width: '90%' }}>
-      {/* <ThemeSwitcher /> */}
-      {/* <FormGroup>
-        <FormControlLabel
-          control={<Switch sx={{ color: '#fff' }} checked={auth} onChange={handleChange} aria-label="theme switch" />}
-          label={auth ? 'Light' : 'Dark'}
-        />
-      </FormGroup> */}
       <AppBar position="static" sx={{ borderRadius: '.5rem' }}>
         <Toolbar>
           <IconButton size="large" edge="start" color="inherit" aria-label="menu">
@@ -47,8 +40,17 @@ export default function MenuAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Task-In
           </Typography>
-          {/* {auth && (
-            <div>
+          {auth && (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography variant="body1" mr={1}>
+                Olá!
+              </Typography>
+              <Typography variant="body1" fontWeight={600} mr={1}>
+                {logedUser.firstName}
+              </Typography>
+              <Typography variant="body1" fontWeight={600} mr={1}>
+                {logedUser.lastName}
+              </Typography>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -60,6 +62,7 @@ export default function MenuAppBar() {
                 <AccountCircle />
               </IconButton>
               <Menu
+                sx={{ mt: 7, ml: 2 }}
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
@@ -74,11 +77,10 @@ export default function MenuAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Sair</MenuItem>
               </Menu>
-            </div>
-          )} */}
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

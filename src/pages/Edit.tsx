@@ -1,7 +1,6 @@
 import { Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import AppBar from '../components/AppBar/AppBar';
-import AlertComponent from '../components/AlertComponent/AlertComponent';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectById, updateTask } from '../store/modules/tasksSlice';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,11 +9,18 @@ import Copyright from '../components/Copyright/Copyright';
 const Edit: React.FC = () => {
   const params = useParams();
   const [description, setDescription] = useState<string>('');
-  const [open, setOpen] = React.useState(false);
   const [valid, setValid] = useState<boolean>(false);
   const TasksRedux = useAppSelector(state => selectById(state, params.id || ''));
+  const logedUser = useAppSelector(state => state.userReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  // validação para acesso a home
+  useEffect(() => {
+    if (logedUser.remember === false || !logedUser) {
+      navigate('/');
+    }
+  }, [logedUser]);
 
   useEffect(() => {
     description.length >= 3 ? setValid(true) : setValid(false);
@@ -24,7 +30,6 @@ const Edit: React.FC = () => {
     if (TasksRedux) {
       setDescription(TasksRedux.description);
     }
-    console.log(params);
   }, [TasksRedux]);
 
   const handleSetDescription = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -34,22 +39,13 @@ const Edit: React.FC = () => {
   const handleEditTask = () => {
     if (params.id) {
       dispatch(updateTask({ id: params.id, changes: { description } }));
-      setOpen(true);
+      alert('Recado Editado com sucesso!');
       navigate('/home');
     }
   };
 
   return (
     <React.Fragment>
-      <AlertComponent
-        typeAlert="warning"
-        message="Recado editado com sucesso!"
-        actionShowAlert={open}
-        actionShowAlertFc={() => {
-          setOpen(false);
-        }}
-      />
-
       <Grid
         container
         style={{

@@ -91,7 +91,7 @@ export default function LoginForm() {
         />
         <FormControlLabel
           control={<Checkbox checked={logedChecked} color="primary" onChange={handleUserRemember} required />}
-          label="Lembrar acesso"
+          label="Lembrar acesso*"
         />
         <Button
           type="button"

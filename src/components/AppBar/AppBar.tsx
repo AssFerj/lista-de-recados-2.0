@@ -22,11 +22,6 @@ export default function MenuAppBar() {
   };
 
   const handleClose = () => {
-    logedUser.firstName = '';
-    logedUser.lastName = '';
-    logedUser.email = '';
-    logedUser.password = '';
-    logedUser.remember = false;
     navigate('/');
   };
 

@@ -35,7 +35,7 @@ const Edit: React.FC = () => {
     if (params.id) {
       dispatch(updateTask({ id: params.id, changes: { description } }));
       setOpen(true);
-      navigate('/');
+      navigate('/home');
     }
   };
 

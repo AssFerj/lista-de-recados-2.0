@@ -122,7 +122,6 @@ export default function LoginForm() {
           sx={{ mt: 3, mb: 2 }}
           onClick={() =>
             handleAddLogedUser({
-              userId: findUser?.email,
               email: logedEmail,
               password: logedPassword,
               remember: logedChecked,

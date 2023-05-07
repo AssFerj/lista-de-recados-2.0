@@ -24,6 +24,8 @@ export default function LoginForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const findUser = UsersRedux.find(item => item.email === logedEmail && item.password === logedPassword);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // setUser({ ...user, [event.target.name]: event.target.value || event.target.checked });
   };
@@ -52,12 +54,31 @@ export default function LoginForm() {
   const user = useAppSelector(state => selectByEmail(state, logedEmail));
 
   const handleAddLogedUser = (log: LogedUserType) => {
-    if (user && user.password === log.password) {
-      dispatch(logedUser(user));
+    // if (user && user.password === log.password) {
+    //   dispatch(logedUser(user));
+    //   navigate('/home');
+    // } else {
+    //   setOpen(true);
+    // }
+
+    // const userToLog: LogedUserType = {
+    //   userId: findUser?.email,
+    //   email: logedEmail,
+    //   password: logedPassword,
+    //   remember: logedChecked,
+    //   tasks: []
+    // };
+
+    if (findUser) {
+      dispatch(logedUser(log));
       navigate('/home');
     } else {
       setOpen(true);
-      return (
+    }
+  };
+  return (
+    <>
+      <Box component="form" noValidate sx={{ mt: 1 }}>
         <AlertComponent
           typeAlert="error"
           message="Usuário não cadastrado!"
@@ -66,12 +87,6 @@ export default function LoginForm() {
             setOpen(false);
           }}
         />
-      );
-    }
-  };
-  return (
-    <>
-      <Box component="form" noValidate sx={{ mt: 1 }}>
         <TextField
           margin="normal"
           required
@@ -106,7 +121,13 @@ export default function LoginForm() {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
           onClick={() =>
-            handleAddLogedUser({ email: logedEmail, password: logedPassword, remember: logedChecked, tasks: [] })
+            handleAddLogedUser({
+              userId: findUser?.email,
+              email: logedEmail,
+              password: logedPassword,
+              remember: logedChecked,
+              tasks: []
+            })
           }
         >
           Entrar

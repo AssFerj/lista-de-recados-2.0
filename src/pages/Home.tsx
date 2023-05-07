@@ -11,7 +11,7 @@ import { addTask, removeTask, selectAll } from '../store/modules/tasksSlice';
 import DeleteDialog from '../components/Dialog/DeleteDialog';
 import { useNavigate } from 'react-router-dom';
 import Copyright from '../components/Copyright/Copyright';
-import { selectByEmail } from '../store/modules/usersSlice';
+import usersSlice, { selectByEmail } from '../store/modules/usersSlice';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -21,35 +21,73 @@ const Home: React.FC = () => {
   const [valid, setValid] = useState<boolean>(false);
   const [openDeleteConfirm, setOpenDeleteConfirm] = React.useState(false);
   const [taskRemove, setTaskRemove] = useState({} as TaskType);
-  const TasksRedux = useAppSelector(selectAll);
-  const [tasksOfLogedUser, setTasksOfLogedUser] = useState<TaskType>({} as TaskType);
+  // const TasksRedux = useAppSelector(selectAll);
   const logedUser = useAppSelector(state => state.userReducer);
   const dispatch = useAppDispatch();
+  const user = useAppSelector(state => selectByEmail(state, logedUser.email));
 
   const CloseDeleteConfirm = () => {
     setOpenDeleteConfirm(false);
   };
 
-  useEffect(() => {
-    if (!logedUser) {
-      navigate('/');
-    }
-  }, [logedUser]);
+  // useEffect(() => {
+  //   if (!logedUser) {
+  //     navigate('/');
+  //   }
+  // }, [logedUser]);
 
   useEffect(() => {
     description.length >= 3 ? setValid(true) : setValid(false);
   }, [description]);
 
-  useEffect(() => {
-    if (logedUser) {
-      const taskToList = logedUser.tasks.filter(task => task.userId === logedUser.email);
-      console.log(taskToList);
-      // setTasksOfLogedUser(taskToList);
-    }
-  }, [tasksOfLogedUser]);
+  // useEffect(() => {
+  //   if (logedUser) {
+  //     const taskToList = logedUser.tasks.filter(task => task.userId === logedUser.email);
+  //     console.log(taskToList);
+  //     // setTasksOfLogedUser(taskToList);
+  //   }
+  // }, [tasksOfLogedUser]);
 
-  const listTasks = useMemo(() => {
-    return TasksRedux?.map(item => {
+  // const listTasks = useMemo(() => {
+  //   return TasksRedux?.map(item => {
+  //     return (
+  //       <Box
+  //         key={item.id}
+  //         style={{
+  //           width: '30em',
+  //           display: 'flex',
+  //           justifyContent: 'center',
+  //           alignItems: 'center',
+  //           backgroundColor: '#fff',
+  //           padding: '.5rem',
+  //           marginBottom: '1rem',
+  //           borderRadius: '.5rem'
+  //         }}
+  //       >
+  //         <Box
+  //           style={{
+  //             display: 'flex',
+  //             justifyContent: 'center',
+  //             alignItems: 'center'
+  //           }}
+  //         >
+  //           <Typography variant="body1" padding={'.5rem 1rem'}>
+  //             {item.description}
+  //           </Typography>
+  //           <Button onClick={() => handleEditTask(item)}>
+  //             <EditIcon />
+  //           </Button>
+  //           <Button onClick={() => handleDeleteTask(item)}>
+  //             <DeleteIcon />
+  //           </Button>
+  //         </Box>
+  //       </Box>
+  //     );
+  //   });
+  // }, [TasksRedux]);
+
+  const listTasksOfLogedUser = useMemo(() => {
+    return logedUser.tasks?.map(item => {
       return (
         <Box
           key={item.id}
@@ -84,7 +122,7 @@ const Home: React.FC = () => {
         </Box>
       );
     });
-  }, [TasksRedux]);
+  }, [logedUser]);
 
   const handleSetDescription = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setDescription(e.currentTarget.value);
@@ -92,6 +130,17 @@ const Home: React.FC = () => {
 
   const handleAddTask = () => {
     const newTask: TaskType = { id: generateId(), description: description, userId: logedUser.email };
+
+    // const taskOfLogedUser = logedUser.tasks.push(newTask);
+
+    // console.log(taskOfLogedUser);
+    console.log(newTask);
+
+    //Verificar essa validação
+    if (newTask.userId === logedUser.email) {
+      user?.tasks.push(newTask);
+    }
+    console.log(user);
 
     dispatch(addTask(newTask));
     setDescription('');
@@ -210,8 +259,15 @@ const Home: React.FC = () => {
               actionCloseDeleteConfirm={CloseDeleteConfirm}
               actionDeleteTask={() => deleteTask(taskRemove)}
             />
-            {TasksRedux.length ? (
+            {/* {TasksRedux.length ? (
               listTasks
+            ) : (
+              <Typography variant="body1" sx={{ padding: '.5rem', background: '#ffffff', borderRadius: '8px' }}>
+                Ainda não há recados cadastrados!
+              </Typography>
+            )} */}
+            {logedUser.tasks.length ? (
+              listTasksOfLogedUser
             ) : (
               <Typography variant="body1" sx={{ padding: '.5rem', background: '#ffffff', borderRadius: '8px' }}>
                 Ainda não há recados cadastrados!

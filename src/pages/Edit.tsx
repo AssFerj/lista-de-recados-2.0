@@ -83,7 +83,7 @@ const Edit: React.FC = () => {
             }}
           >
             <Typography variant="h6" mb={5}>
-              Cadastrar Tarefas
+              Editar Tarefas
             </Typography>
             <TextField
               id="task-description"

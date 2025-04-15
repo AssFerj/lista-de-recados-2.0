@@ -47,12 +47,8 @@ export default function LoginForm() {
   };
 
   const handleAddLogedUser = (log: LogedUserType) => {
-    if (findUser) {
-      dispatch(logedUser(log));
-      navigate('/home');
-    } else {
-      setOpen(true);
-    }
+    dispatch(logedUser(log));
+    navigate('/home');
   };
   return (
     <>
@@ -98,15 +94,19 @@ export default function LoginForm() {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
-          onClick={() =>
-            handleAddLogedUser({
-              firstName: findUser?.firstName,
-              lastName: findUser?.lastName,
-              email: logedEmail,
-              password: logedPassword,
-              remember: logedChecked
-            })
-          }
+          onClick={() => {
+            if (findUser) {
+              handleAddLogedUser({
+                firstName: findUser.firstName,
+                lastName: findUser.lastName,
+                email: logedEmail,
+                password: logedPassword,
+                remember: logedChecked
+              });
+            } else {
+              setOpen(true);
+            }
+          }}
         >
           Entrar
         </Button>

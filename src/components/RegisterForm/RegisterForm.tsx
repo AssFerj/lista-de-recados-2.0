@@ -11,7 +11,7 @@ import { addUser } from '../../store/modules/usersSlice';
 import { useNavigate } from 'react-router-dom';
 
 export default function Registerform() {
-  const [user, setUser] = useState<UserType>({} as UserType);
+  const [user, setUser] = useState<UserType & { confirmPassword: string }>({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', tasks: [] });
   const [valid, setValid] = useState<boolean>(false);
   const [errorPassword, setErrorPassword] = useState<string>('');
   const navigate = useNavigate();
@@ -41,7 +41,8 @@ export default function Registerform() {
   };
 
   const handleSubmit = () => {
-    dispatch(addUser({ ...user }));
+    const { confirmPassword, ...userData } = user;
+    dispatch(addUser(userData as UserType));
     handleClear();
     navigate('/');
   };

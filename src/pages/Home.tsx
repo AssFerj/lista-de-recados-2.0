@@ -29,7 +29,7 @@ const Home: React.FC = () => {
 
   // validação para acesso a home
   useEffect(() => {
-    if (logedUser.remember === false || !logedUser) {
+    if (!logedUser || !logedUser.email) {
       navigate('/');
     }
   }, [logedUser]);
@@ -84,7 +84,7 @@ const Home: React.FC = () => {
 
   const handleAddTask = () => {
     const existTask = TasksRedux.find(item => item.description === description);
-    const newTask: TaskType = { id: generateId(), description: description, userId: logedUser.email };
+    const newTask: TaskType = { id: generateId().toString(), description: description, userId: logedUser.email };
 
     if (existTask) {
       return alert('Recado já cadastrado!');

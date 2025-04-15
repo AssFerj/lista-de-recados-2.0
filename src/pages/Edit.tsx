@@ -17,7 +17,7 @@ const Edit: React.FC = () => {
 
   // validação para acesso a home
   useEffect(() => {
-    if (logedUser.remember === false || !logedUser) {
+    if (!logedUser || !logedUser.email) {
       navigate('/');
     }
   }, [logedUser]);

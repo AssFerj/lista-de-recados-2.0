@@ -22,6 +22,7 @@ export default function MenuAppBar() {
   };
 
   const handleClose = () => {
+    setAuth(false);
     navigate('/');
   };
 
